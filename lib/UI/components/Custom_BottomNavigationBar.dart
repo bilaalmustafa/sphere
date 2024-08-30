@@ -1,0 +1,65 @@
+import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
+import 'package:awesome_bottom_bar/widgets/inspired/inspired.dart';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Bottom_ControllerProvider.dart';
+import 'package:sphere/core/constants/Const_Colors.dart';
+
+class BottomNavigationBarScreen extends StatelessWidget {
+  const BottomNavigationBarScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final bottomProvider = Provider.of<BottomControllerProvider>(context);
+
+    return BottomBarInspiredOutside(
+      elevation: 8,
+      boxShadow: [
+        BoxShadow(
+            blurRadius: 5,
+            blurStyle: BlurStyle.normal,
+            color: ConstColors.blackColor,
+            offset: Offset(-5, -5)),
+      ],
+      curve: Curves.decelerate,
+      animated: true,
+      indexSelected: bottomProvider.selectItem,
+      onTap: (value) {
+        bottomProvider.changeTab(value);
+      },
+      items: const [
+        TabItem(
+          icon: CupertinoIcons.home,
+          title: 'Home',
+        ),
+        TabItem(
+          icon: CupertinoIcons.shopping_cart,
+          title: 'Shop',
+        ),
+        // TabItem(
+        //   icon: Icons.favorite,
+        //   title: 'wishlist',
+        // ),
+        TabItem(
+          icon: CupertinoIcons.chat_bubble,
+          title: 'Chat',
+        ),
+        TabItem(
+          icon: CupertinoIcons.profile_circled,
+          title: 'Profile',
+        )
+      ],
+      backgroundColor: ConstColors.primarycolor,
+      color: ConstColors.seconderyColor,
+      colorSelected: ConstColors.primarycolor,
+      // borderRadius: BorderRadius.circular(30),
+      itemStyle: ItemStyle.circle,
+      isAnimated: true,
+      chipStyle: ChipStyle(
+          notchSmoothness: NotchSmoothness.verySmoothEdge,
+          background: ConstColors.seconderyColor),
+    );
+  }
+}
