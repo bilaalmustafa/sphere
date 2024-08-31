@@ -6,7 +6,7 @@ import 'package:sphere/UI/components/Custom_ShopNowButton.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
 import 'package:sphere/UI/components/Custom_WishList.dart';
 import 'package:sphere/UI/components/custom_Curt.dart';
-import 'package:sphere/UI/screens/ProductDetailScreen.dart';
+import 'package:sphere/UI/screens/Products_DetialScreen/ProductDetailScreen.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_text.dart';
 import 'package:sphere/generated/assets.dart';
