@@ -6,4 +6,5 @@ class ConstColors {
   static Color seconderyColor = const Color(0xff0b6477);
   static Color thirdColor = const Color(0xfff2f2f2);
   static Color customGrey = Colors.grey;
+  static Color CustomRed = Colors.red;
 }

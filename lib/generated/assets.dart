@@ -6,4 +6,5 @@ class ImagesAssets {
   static var loginLogo = 'Assets/Icons/spherelogo.png';
   static var backicon = 'Assets/Icons/arrowback.png';
   static var logo = 'Assets/Images/logo.png';
+  static var mycart = 'Assets/Images/mycart.png';
 }

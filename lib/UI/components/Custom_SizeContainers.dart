@@ -25,7 +25,8 @@ class CustomSizingContainer extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
             color: color,
-            border: Border.all(color: ConstColors.customGrey, width: 2)),
+            border: Border.all(
+                color: ConstColors.customGrey.withOpacity(0.5), width: 2)),
         child: CustomText(
             titletext: text,
             fontsize: normalText,

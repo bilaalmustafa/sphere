@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sphere/UI/components/Custom_Button.dart';
+import 'package:sphere/UI/components/Custom_LeadingBack.dart';
 import 'package:sphere/UI/components/Custom_RatingWidget.dart';
 import 'package:sphere/UI/components/Custom_SizeContainers.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
@@ -16,8 +17,10 @@ class ProductDerailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: ConstColors.primarycolor,
       appBar: AppBar(
         toolbarHeight: 28,
+        leading: const CustomLeadingBack(),
         actions: const [
           CustomCurt(),
           SizedBox(
@@ -84,7 +87,7 @@ class ProductDerailScreen extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.only(top: 10, bottom: 20),
               child: Row(
                 children: [
                   CustomText(
@@ -118,7 +121,7 @@ class ProductDerailScreen extends StatelessWidget {
                   ),
                   Spacer(),
                   Container(
-                    height: 25,
+                    height: 20,
                     width: 70,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
@@ -127,7 +130,7 @@ class ProductDerailScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20)),
                     child: CustomText(
                         titletext: 'in Stock',
-                        fontsize: normalText,
+                        fontsize: smallText,
                         bold: FontWeight.w500,
                         textcolor: ConstColors.seconderyColor),
                   )
@@ -145,7 +148,7 @@ class ProductDerailScreen extends StatelessWidget {
                       textcolor: ConstColors.seconderyColor),
                 ),
                 Divider(
-                  color: ConstColors.customGrey.withOpacity(0.5),
+                  color: ConstColors.customGrey.withOpacity(0.2),
                   thickness: 2,
                 ),
                 Container(

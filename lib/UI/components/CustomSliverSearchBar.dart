@@ -14,7 +14,7 @@ class CustomSliverSearchBar extends StatelessWidget {
         elevation: 10,
         shadowColor: ConstColors.blackColor,
         automaticallyImplyLeading: false,
-        //toolbarHeight: 200,
+        toolbarHeight: 10,
         pinned: true,
         scrolledUnderElevation: 10,
         backgroundColor: ConstColors.primarycolor,
