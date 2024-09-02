@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:sphere/UI/components/Custom_LeadingBack.dart';
+import 'package:sphere/UI/components/Custom_RatingWidget.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
 import 'package:sphere/UI/components/custom_Curt.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Stores_Screens/Stores_Screen.dart';
@@ -37,35 +38,32 @@ class _AllStoreScreenState extends State<AllStoreScreen> {
       ),
       backgroundColor: ConstColors.primarycolor,
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Column(
           children: [
-            Container(
-              width: double.infinity,
-              height: 200,
-              color: Colors.amberAccent,
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  height: 200.0,
-                  autoPlay: true,
-                  enlargeCenterPage: true,
-                  autoPlayInterval: Duration(seconds: 3),
-                  viewportFraction: 0.8,
-                  aspectRatio: 16 / 9,
-                  initialPage: 0,
-                ),
-                items: imageList
-                    .map((item) => Container(
-                          child: Center(
-                            child: Image.network(
-                              item,
-                              fit: BoxFit.cover,
-                              width: 1000,
-                            ),
-                          ),
-                        ))
-                    .toList(),
+            CarouselSlider(
+              options: CarouselOptions(
+                animateToClosest: true,
+                height: 200.0,
+                autoPlay: true,
+                enlargeCenterPage: true,
+                autoPlayInterval: Duration(seconds: 3),
+                viewportFraction: 0.8,
+                aspectRatio: 16 / 9,
+                initialPage: 0,
               ),
+              items: imageList
+                  .map((item) => Center(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Image(
+                            image: AssetImage(item),
+                            fit: BoxFit.fill,
+                            width: 1000,
+                          ),
+                        ),
+                      ))
+                  .toList(),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
@@ -90,7 +88,7 @@ class _AllStoreScreenState extends State<AllStoreScreen> {
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
-                            childAspectRatio: 2 / 2.7,
+                            childAspectRatio: 2 / 2.9,
                             mainAxisSpacing: 8,
                             crossAxisSpacing: 8),
                     itemBuilder: (context, index) {
@@ -114,6 +112,7 @@ class _AllStoreScreenState extends State<AllStoreScreen> {
                                 backgroundImage:
                                     AssetImage(ImagesAssets.firstImage),
                               ),
+                              const CustonRatingWidget(),
                               CustomText(
                                   titletext: storeName,
                                   fontsize: normalText,
