@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sphere/UI/components/Custom_Button.dart';
 import 'package:sphere/UI/components/Custom_TextField.dart';
+import 'package:sphere/UI/screens/Buyer_SellerScreen/BuyerSellerScreen.dart';
 import 'package:sphere/UI/screens/auth/SignUp_Screen/Signup_Controller.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_text.dart';
@@ -50,7 +51,7 @@ class SigninScreen extends StatelessWidget {
                 title: email,
               ),
               CustomTextField(
-                // controller: signUpControllerProvider.passwordController,
+                // controler: signUpControllerProvider.passwordController,
                 title: password,
                 icon: Icons.visibility_off_outlined,
               ),
@@ -60,13 +61,18 @@ class SigninScreen extends StatelessWidget {
                 icon: Icons.visibility_off_outlined,
               ),
               SizedBox(
-                height: size.height * 0.09,
+                height: size.height * 0.05,
               ),
               CustomButton(
-                  buttontext: logIn,
+                  buttontext: signUp,
                   buttoncolor: ConstColors.seconderyColor,
                   btntextcolor: ConstColors.primarycolor,
-                  onTop: () {})
+                  onTop: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (contex) {
+                      return const BuyerSellerScreen();
+                    }));
+                  })
             ],
           ),
         ),

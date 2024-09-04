@@ -6,12 +6,14 @@ import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/generated/assets.dart';
 
 class CustomSliverGrid extends StatelessWidget {
-  const CustomSliverGrid({
+  CustomSliverGrid({
     super.key,
     required this.size,
     required this.condition,
+    this.onTap,
   });
   final String condition;
+  VoidCallback? onTap;
 
   final Size size;
 
@@ -93,16 +95,46 @@ class CustomSliverGrid extends StatelessWidget {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  CustomText(
-                                      titletext: 'Shoe',
-                                      fontsize: 18,
-                                      bold: FontWeight.bold,
-                                      textcolor: ConstColors.seconderyColor),
-                                  CustomText(
-                                      titletext: '\$ 23.98',
-                                      fontsize: 15,
-                                      bold: FontWeight.normal,
-                                      textcolor: ConstColors.seconderyColor),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      CustomText(
+                                          titletext: 'Shoe',
+                                          fontsize: 18,
+                                          bold: FontWeight.bold,
+                                          textcolor:
+                                              ConstColors.seconderyColor),
+                                      condition == 'StoreProfileScreen'
+                                          ? InkWell(
+                                              onTap: onTap,
+                                              child: Icon(
+                                                Icons.edit,
+                                                color:
+                                                    ConstColors.seconderyColor,
+                                              ),
+                                            )
+                                          : Container(),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      CustomText(
+                                          titletext: '\$ 23.98',
+                                          fontsize: 15,
+                                          bold: FontWeight.normal,
+                                          textcolor:
+                                              ConstColors.seconderyColor),
+                                      condition == 'StoreProfileScreen'
+                                          ? Icon(
+                                              Icons.delete,
+                                              color: ConstColors.seconderyColor,
+                                            )
+                                          : Container(),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),

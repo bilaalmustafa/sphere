@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Bottom_ControllerProvider.dart';
+import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Profile_Screens/StoreProfile_Controller.dart';
 import 'package:sphere/UI/screens/auth/SignUp_Screen/Signup_Controller.dart';
 import 'package:sphere/UI/screens/auth/logIn_Screen/logIn_controller.dart';
 import 'package:sphere/UI/screens/splash_Screens/Splash_Screen.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => BottomControllerProvider()),
         ChangeNotifierProvider(create: (context) => LogInControllerPrivoder()),
         ChangeNotifierProvider(create: (context) => SignUpControllerPrivoder()),
+        ChangeNotifierProvider(create: (context) => StoreProfileProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

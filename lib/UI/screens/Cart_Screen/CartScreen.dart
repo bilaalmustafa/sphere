@@ -36,7 +36,7 @@ class _MyWidgetState extends State<CartScreen> {
                 image: AssetImage(
                   'Assets/Images/Salford.png',
                 ),
-                fit: BoxFit.fill,
+                fit: BoxFit.contain,
                 height: 60,
               ),
             ),

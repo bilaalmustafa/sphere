@@ -12,3 +12,5 @@ const String forgetpassword = ' Forget Password';
 const String logIn = 'Log In';
 const String signUp = 'Sign Up';
 const String shopNow = 'SHOP NOW';
+const String Buyer = 'Buyer';
+const String Seller = 'Seller';
