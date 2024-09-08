@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sphere/UI/components/Custom_Button.dart';
 import 'package:sphere/UI/components/Custom_LeadingBack.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
+import 'package:sphere/UI/screens/CheckOut_Screen/CheckOutScreen.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
 import 'package:sphere/core/constants/Const_text.dart';
@@ -20,8 +21,10 @@ class _MyWidgetState extends State<CartScreen> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 18,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(color: ConstColors.primarycolor),
+        ),
         leading: const CustomLeadingBack(),
-        backgroundColor: ConstColors.primarycolor,
         elevation: 0,
       ),
       backgroundColor: ConstColors.primarycolor,
@@ -196,7 +199,13 @@ class _MyWidgetState extends State<CartScreen> {
                   buttontext: 'Checkout',
                   buttoncolor: ConstColors.seconderyColor,
                   btntextcolor: ConstColors.primarycolor,
-                  onTop: () {})
+                  onTop: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (
+                      context,
+                    ) {
+                      return const CheckOutScreen();
+                    }));
+                  })
             ],
           ),
         ),

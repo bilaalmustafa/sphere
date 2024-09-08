@@ -20,9 +20,11 @@ class FeedsScreen extends StatelessWidget {
     return Scaffold(
         backgroundColor: ConstColors.primarycolor,
         appBar: AppBar(
-          shadowColor: ConstColors.blackColor,
-          elevation: 5,
-          backgroundColor: ConstColors.primarycolor,
+          // shadowColor: ConstColors.blackColor,
+          // elevation: 5,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(color: ConstColors.primarycolor),
+          ),
           automaticallyImplyLeading: false,
           centerTitle: true,
           title: Text(

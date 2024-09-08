@@ -27,8 +27,12 @@ class _AllStoreScreenState extends State<AllStoreScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         automaticallyImplyLeading: false,
-        backgroundColor: ConstColors.primarycolor,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(color: ConstColors.primarycolor),
+        ),
+        // backgroundColor: ConstColors.primarycolor,
         actions: const [
           CustomCurt(),
           SizedBox(
@@ -41,6 +45,23 @@ class _AllStoreScreenState extends State<AllStoreScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomText(
+                      titletext: 'Sell offers',
+                      fontsize: Heading1,
+                      bold: FontWeight.w500,
+                      textcolor: ConstColors.seconderyColor),
+                  Icon(
+                    Icons.arrow_drop_down,
+                    color: ConstColors.seconderyColor,
+                  )
+                ],
+              ),
+            ),
             CarouselSlider(
               options: CarouselOptions(
                 animateToClosest: true,
@@ -73,7 +94,7 @@ class _AllStoreScreenState extends State<AllStoreScreen> {
                   CustomText(
                       titletext: 'All Store',
                       fontsize: Heading1,
-                      bold: FontWeight.bold,
+                      bold: FontWeight.w500,
                       textcolor: ConstColors.seconderyColor),
                   Icon(
                     Icons.arrow_drop_down,

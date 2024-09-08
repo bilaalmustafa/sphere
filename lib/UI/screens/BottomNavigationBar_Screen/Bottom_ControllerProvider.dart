@@ -3,13 +3,15 @@ import 'package:sphere/UI/screens/BottomNavigationBar_Screen/AllStore_Screen/All
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Chats_Screens/Chats_Screen.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Feeds_Screens/Feeds_Screen.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Profile_Screens/StoreProfile_Screen.dart';
+import 'package:sphere/UI/screens/BottomNavigationBar_Screen/User_Profile/UserProfile.dart';
 
 class BottomControllerProvider with ChangeNotifier {
   int _selectItem = 0;
   final List<Widget> _screens = [
     const FeedsScreen(),
     const AllStoreScreen(),
-    const ChatScreen(),
+    UserProfile(),
+    //const ChatScreen(),
     const StoreProfileScreen(),
   ];
 
