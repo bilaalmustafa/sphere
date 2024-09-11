@@ -10,28 +10,33 @@ class CustomSizingContainer extends StatelessWidget {
     required this.text,
     required this.txtcolor,
     required this.size,
+    required this.onTop,
   });
   final Color color, txtcolor;
   final String text;
   final Size size;
+  final VoidCallback onTop;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Container(
-        height: 30,
-        width: 30,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            color: color,
-            border: Border.all(
-                color: ConstColors.customGrey.withOpacity(0.5), width: 2)),
-        child: CustomText(
-            titletext: text,
-            fontsize: normalText,
-            bold: FontWeight.bold,
-            textcolor: txtcolor),
+      child: InkWell(
+        onTap: onTop,
+        child: Container(
+          height: 30,
+          width: 30,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              color: color,
+              border: Border.all(
+                  color: ConstColors.customGrey.withOpacity(0.5), width: 2)),
+          child: CustomText(
+              titletext: text,
+              fontsize: normalText,
+              bold: FontWeight.bold,
+              textcolor: txtcolor),
+        ),
       ),
     );
   }

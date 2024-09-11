@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:sphere/UI/components/CustomSliverSearchBar.dart';
 import 'package:sphere/UI/components/Custom_SliverGrid.dart';
 import 'package:sphere/UI/components/Custom_SliverStack.dart';
+import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Stores_Screens/Stores_Provider.dart';
 
 import 'package:sphere/core/constants/Const_Colors.dart';
 
 class StoresScreen extends StatelessWidget {
-  const StoresScreen({super.key});
+  const StoresScreen(
+      {super.key, required this.brandname, required this.description});
+  final String brandname, description;
 
   @override
   Widget build(BuildContext context) {
+    final storeProvider = Provider.of<StoreProvider>(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: ConstColors.thirdColor,
@@ -19,8 +24,10 @@ class StoresScreen extends StatelessWidget {
             CustomSliverStack(
               size: size,
               condition: 'StoresScreen',
+              brandname: brandname,
+              description: description,
             ),
-            const CustomSliverSearchBar(),
+            CustomSliverSearchBar(controller: storeProvider.searchController),
 
             CustomSliverGrid(
               size: size,

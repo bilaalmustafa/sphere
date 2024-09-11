@@ -5,7 +5,6 @@ import 'package:sphere/UI/components/Custom_Button.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
 import 'package:sphere/UI/screens/Buyer_Screen/BuyerScreen.dart';
 import 'package:sphere/UI/screens/Seller_Screen/SellerScreen.dart';
-import 'package:sphere/UI/screens/auth/SignUp_Screen/Signin_Screen.dart';
 import 'package:sphere/UI/screens/auth/logIn_Screen/LognIn_Screen.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_text.dart';
@@ -57,10 +56,7 @@ class BuyerSellerScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 40, bottom: 10),
               child: CustomButton(
-                onTop: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const BuyerScreen())),
+                onTop: () => Navigator.pushNamed(context, '/BuyerScreen'),
                 buttontext: Buyer,
                 btntextcolor: ConstColors.primarycolor,
                 buttoncolor: ConstColors.seconderyColor,
@@ -68,10 +64,7 @@ class BuyerSellerScreen extends StatelessWidget {
             ),
             CustomButton(
               onTop: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SellerScreen()));
+                Navigator.pushNamed(context, '/SellerScreen');
               },
               buttontext: Seller,
               btntextcolor: ConstColors.blackColor,

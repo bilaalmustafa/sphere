@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
+import 'package:sphere/core/constants/Const_Heading.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton(
@@ -36,7 +37,7 @@ class CustomButton extends StatelessWidget {
         ),
         child: CustomText(
           titletext: buttontext,
-          fontsize: 14,
+          fontsize: normalText,
           bold: FontWeight.bold,
           textcolor: btntextcolor,
         ),

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "248504485245",
+    "project_id": "sphere-dd78f",
+    "storage_bucket": "sphere-dd78f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:248504485245:android:289d5c504e2daccb38f814",
+        "android_client_info": {
+          "package_name": "com.example.sphere"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoDMeXVU7rAAvs9qG_8jVpFyEvFNAQrgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:248504485245:android:01e79414f64fa5c838f814",
+        "android_client_info": {
+          "package_name": "com.example.sphere"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoDMeXVU7rAAvs9qG_8jVpFyEvFNAQrgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

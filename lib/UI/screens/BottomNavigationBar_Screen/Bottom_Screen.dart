@@ -14,11 +14,11 @@ class NevigationBottomScreen extends StatefulWidget {
 class _NevigationBottomState extends State<NevigationBottomScreen> {
   @override
   Widget build(BuildContext context) {
-    final bottomProvider = Provider.of<BottomControllerProvider>(context);
+    final provider = Provider.of<BottomControllerProvider>(context);
 
     return Scaffold(
       backgroundColor: ConstColors.thirdColor,
-      body: bottomProvider.screen[bottomProvider.selectItem],
+      body: provider.screens[provider.selectItem],
       bottomNavigationBar: const BottomNavigationBarScreen(),
     );
   }

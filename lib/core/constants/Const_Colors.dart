@@ -7,4 +7,6 @@ class ConstColors {
   static Color thirdColor = const Color(0xfff2f2f2);
   static Color customGrey = Colors.grey;
   static Color CustomRed = Colors.red;
+  static Color basecolor = Colors.grey[300]!;
+  static Color highlightcolor = Colors.grey[100]!;
 }

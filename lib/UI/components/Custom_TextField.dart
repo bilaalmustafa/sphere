@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
+import 'package:sphere/core/constants/Const_Heading.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField({
-    super.key,
-    required this.title,
-    this.icon,
-    // required this.controller
-  });
+  const CustomTextField(
+      {super.key, required this.title, this.icon, required this.controller});
   final String title;
   final IconData? icon;
-  // final TextEditingController controller;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +18,7 @@ class CustomTextField extends StatelessWidget {
       ),
       child: TextField(
         // keyboardType: TextInputType.,
-        // controller: controller,
+        controller: controller,
         decoration: InputDecoration(
           // contentPadding: EdgeInsets.symmetric(horizontal: 30),
           fillColor: ConstColors.thirdColor,
@@ -41,7 +38,9 @@ class CustomTextField extends StatelessWidget {
                 color: ConstColors.thirdColor,
               )),
           labelText: title,
-          labelStyle: TextStyle(color: ConstColors.seconderyColor),
+          labelStyle: TextStyle(
+              color: ConstColors.seconderyColor.withOpacity(0.3),
+              fontSize: smallText),
         ),
       ),
     );

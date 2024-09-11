@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sphere/UI/components/CustomAppbarText.dart';
 import 'package:sphere/UI/components/Custom_CartButton.dart';
 import 'package:sphere/UI/components/Custom_SendButton.dart';
 import 'package:sphere/UI/components/Custom_ShopNowButton.dart';
@@ -8,8 +9,10 @@ import 'package:sphere/UI/components/Custom_WishList.dart';
 import 'package:sphere/UI/components/custom_Curt.dart';
 import 'package:sphere/UI/screens/Products_DetialScreen/ProductDetailScreen.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
+import 'package:sphere/core/constants/Const_Heading.dart';
 import 'package:sphere/core/constants/Const_text.dart';
 import 'package:sphere/generated/assets.dart';
+import 'package:sphere/models/demeModel.dart';
 
 class FeedsScreen extends StatelessWidget {
   const FeedsScreen({super.key});
@@ -27,10 +30,8 @@ class FeedsScreen extends StatelessWidget {
           ),
           automaticallyImplyLeading: false,
           centerTitle: true,
-          title: Text(
-            'BrandSphere',
-            style: GoogleFonts.permanentMarker(
-                color: ConstColors.seconderyColor, fontSize: 25),
+          title: const CustomAppbarText(
+            text: 'BrandSphere',
           ),
           actions: [
             Icon(
@@ -52,7 +53,7 @@ class FeedsScreen extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: GridView.builder(
-              itemCount: 10,
+              itemCount: dememodel.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: 2 / 3.1,
                   crossAxisCount: 2,
@@ -63,7 +64,21 @@ class FeedsScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return const ProductDerailScreen();
+                      return ProductDerailScreen(
+                        image: dememodel[index]['image'] ??
+                            '', // Default to empty string if null
+                        storename: dememodel[index]['store'] ?? 'Unknown Store',
+                        price: (dememodel[index]['price'] ??
+                            0.0), // Default to 0.0 if null and convert to String
+                        productname: dememodel[index]['productname'] ??
+                            'Unknown Product',
+                        discountprice: (dememodel[index]['discountprice'] ??
+                            0.0), // Default to 0.0 if null and convert to String
+                        description:
+                            dememodel[index]['description'] ?? 'No Description',
+                        stock: dememodel[index]['stock'] ??
+                            'Out of Stock', // Default value if null
+                      );
                     }));
                   },
                   child: Container(
@@ -90,7 +105,7 @@ class FeedsScreen extends StatelessWidget {
                             borderRadius: const BorderRadius.vertical(
                                 top: Radius.circular(20)),
                             image: DecorationImage(
-                                image: AssetImage(ImagesAssets.forthImage),
+                                image: AssetImage(dememodel[index]['image']),
                                 fit: BoxFit.fill),
                           ),
                           child: Padding(
@@ -132,18 +147,19 @@ class FeedsScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomText(
-                                    titletext: storeName,
-                                    fontsize: 13,
+                                    titletext: dememodel[index]['store'],
+                                    fontsize: smallText,
                                     bold: FontWeight.normal,
                                     textcolor: ConstColors.customGrey),
                                 CustomText(
-                                    titletext: 'Shoes',
-                                    fontsize: 16,
+                                    titletext: dememodel[index]['productname'],
+                                    fontsize: normalText,
                                     bold: FontWeight.normal,
                                     textcolor: ConstColors.blackColor),
                                 CustomText(
-                                    titletext: '\$ 300.0',
-                                    fontsize: 16,
+                                    titletext:
+                                        ' \$${dememodel[index]['price']}',
+                                    fontsize: Heading3,
                                     bold: FontWeight.bold,
                                     textcolor: ConstColors.seconderyColor),
                                 const ShopNowButton(),

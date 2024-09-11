@@ -1,13 +1,20 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sphere/UI/components/CostomCarousalSlider.dart';
+import 'package:sphere/UI/components/CustomAppbarText.dart';
 import 'package:sphere/UI/components/Custom_LeadingBack.dart';
 import 'package:sphere/UI/components/Custom_RatingWidget.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
+import 'package:sphere/UI/components/Shimmer/ShimmerAllSore.dart';
 import 'package:sphere/UI/components/custom_Curt.dart';
+import 'package:sphere/UI/screens/BottomNavigationBar_Screen/AllStore_Screen/AllStore_Provider.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Stores_Screens/Stores_Screen.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
 import 'package:sphere/core/constants/Const_text.dart';
+import 'package:sphere/core/constants/Flutertoast.dart';
 import 'package:sphere/generated/assets.dart';
 
 class AllStoreScreen extends StatefulWidget {
@@ -18,15 +25,17 @@ class AllStoreScreen extends StatefulWidget {
 }
 
 class _AllStoreScreenState extends State<AllStoreScreen> {
-  List<String> imageList = [
-    'Assets/Images/image1.jpeg',
-    'Assets/Images/image2.jpeg'
-  ];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final allStoreProvider =
+        Provider.of<AllSToreProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        title: const CustomAppbarText(
+          text: 'Brands',
+        ),
         elevation: 0,
         automaticallyImplyLeading: false,
         flexibleSpace: Container(
@@ -43,109 +52,116 @@ class _AllStoreScreenState extends State<AllStoreScreen> {
       backgroundColor: ConstColors.primarycolor,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomText(
-                      titletext: 'Sell offers',
-                      fontsize: Heading1,
-                      bold: FontWeight.w500,
-                      textcolor: ConstColors.seconderyColor),
-                  Icon(
-                    Icons.arrow_drop_down,
-                    color: ConstColors.seconderyColor,
-                  )
-                ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomText(
+                        titletext: 'Sell offers',
+                        fontsize: Heading2,
+                        bold: FontWeight.w500,
+                        textcolor: ConstColors.seconderyColor),
+                    Icon(
+                      Icons.arrow_drop_down,
+                      color: ConstColors.seconderyColor,
+                    )
+                  ],
+                ),
               ),
-            ),
-            CarouselSlider(
-              options: CarouselOptions(
-                animateToClosest: true,
-                height: 200.0,
-                autoPlay: true,
-                enlargeCenterPage: true,
-                autoPlayInterval: Duration(seconds: 3),
-                viewportFraction: 0.8,
-                aspectRatio: 16 / 9,
-                initialPage: 0,
+              Consumer<AllSToreProvider>(
+                builder: (context, vm, child) =>
+                    CostomCarousalSlider(imageList: vm.imageList),
               ),
-              items: imageList
-                  .map((item) => Center(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Image(
-                            image: AssetImage(item),
-                            fit: BoxFit.fill,
-                            width: 1000,
-                          ),
-                        ),
-                      ))
-                  .toList(),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomText(
-                      titletext: 'All Store',
-                      fontsize: Heading1,
-                      bold: FontWeight.w500,
-                      textcolor: ConstColors.seconderyColor),
-                  Icon(
-                    Icons.arrow_drop_down,
-                    color: ConstColors.seconderyColor,
-                  )
-                ],
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomText(
+                        titletext: 'All Store',
+                        fontsize: Heading2,
+                        bold: FontWeight.w500,
+                        textcolor: ConstColors.seconderyColor),
+                    Icon(
+                      Icons.arrow_drop_down,
+                      color: ConstColors.seconderyColor,
+                    )
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-                child: GridView.builder(
-                    itemCount: 4,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            childAspectRatio: 2 / 2.9,
-                            mainAxisSpacing: 8,
-                            crossAxisSpacing: 8),
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return const StoresScreen();
-                          }));
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          color: ConstColors.customGrey.withOpacity(0.1),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: ConstColors.primarycolor,
-                                radius: size.width * 0.13,
-                                backgroundImage:
-                                    AssetImage(ImagesAssets.firstImage),
+              StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('users')
+                      .where('role', isEqualTo: 'seller')
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData ||
+                        snapshot.data == null ||
+                        snapshot.hasError ||
+                        snapshot.connectionState == ConnectionState.waiting) {
+                      return ShimmerAllStore(size: size, Length: 10);
+                    }
+
+                    final docs = snapshot.data!.docs;
+                    return GridView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: docs.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                childAspectRatio: 2 / 2.9,
+                                mainAxisSpacing: 8,
+                                crossAxisSpacing: 8),
+                        itemBuilder: (context, index) {
+                          final doc = snapshot.data!.docs[index];
+
+                          return InkWell(
+                            onTap: () {
+                              allStoreProvider.onChange(index);
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return StoresScreen(
+                                  brandname: doc['brand'],
+                                  description: doc['description'],
+                                );
+                              }));
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              color: allStoreProvider.seleted == index
+                                  ? ConstColors.seconderyColor.withOpacity(0.1)
+                                  : ConstColors.primarycolor,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: ConstColors.primarycolor,
+                                    radius: size.width * 0.13,
+                                    backgroundImage:
+                                        AssetImage(ImagesAssets.firstImage),
+                                  ),
+                                  const CustonRatingWidget(),
+                                  CustomText(
+                                      titletext: doc['brand'],
+                                      fontsize: smallText,
+                                      bold: FontWeight.w500,
+                                      textcolor: ConstColors.seconderyColor
+                                          .withOpacity(0.5))
+                                ],
                               ),
-                              const CustonRatingWidget(),
-                              CustomText(
-                                  titletext: storeName,
-                                  fontsize: normalText,
-                                  bold: FontWeight.w500,
-                                  textcolor:
-                                      ConstColors.blackColor.withOpacity(0.5))
-                            ],
-                          ),
-                        ),
-                      );
-                    }))
-          ],
+                            ),
+                          );
+                        });
+                  })
+            ],
+          ),
         ),
       ),
     );

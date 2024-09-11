@@ -3,7 +3,7 @@ import 'package:draggable_carousel_slider/draggable_carousel_slider.dart';
 import 'package:sphere/UI/components/CustomImage_Container.dart';
 import 'package:sphere/UI/components/Custom_Button.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
-import 'package:sphere/UI/screens/auth/SignUp_Screen/Signin_Screen.dart';
+import 'package:sphere/UI/screens/auth/SignUp_Screen/SignUp_Screen.dart';
 import 'package:sphere/UI/screens/auth/logIn_Screen/LognIn_Screen.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_text.dart';
@@ -55,10 +55,7 @@ class CreateAccount extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 40, bottom: 10),
               child: CustomButton(
-                onTop: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const LoginScreen())),
+                onTop: () => Navigator.pushNamed(context, '/LoginScreen'),
                 buttontext: logIn,
                 btntextcolor: ConstColors.primarycolor,
                 buttoncolor: ConstColors.seconderyColor,
@@ -66,10 +63,7 @@ class CreateAccount extends StatelessWidget {
             ),
             CustomButton(
               onTop: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SigninScreen()));
+                Navigator.pushNamed(context, '/SignupScreen');
               },
               buttontext: signUp,
               btntextcolor: ConstColors.blackColor,
