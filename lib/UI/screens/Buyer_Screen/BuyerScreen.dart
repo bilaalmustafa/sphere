@@ -6,15 +6,21 @@ import 'package:sphere/UI/components/Custom_Button.dart';
 import 'package:sphere/UI/components/Custom_LeadingBack.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
 import 'package:sphere/UI/components/Custom_TextField.dart';
+import 'package:sphere/UI/components/ImagePicker.dart';
 import 'package:sphere/UI/screens/Buyer_Screen/Buyer_Provider.dart';
 import 'package:sphere/UI/screens/auth/logIn_Screen/LognIn_Screen.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
 import 'package:sphere/core/constants/Flutertoast.dart';
 
-class BuyerScreen extends StatelessWidget {
+class BuyerScreen extends StatefulWidget {
   const BuyerScreen({super.key});
 
+  @override
+  State<BuyerScreen> createState() => _BuyerScreenState();
+}
+
+class _BuyerScreenState extends State<BuyerScreen> {
   @override
   Widget build(BuildContext context) {
     final buyerProvider = Provider.of<BuyerProvider>(context);
@@ -31,20 +37,31 @@ class BuyerScreen extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: size.height * 0.03),
-              CircleAvatar(
-                backgroundColor: ConstColors.thirdColor,
-                radius: 60,
-                child: Icon(
-                  Icons.camera_alt_outlined,
-                  size: 40,
-                  color: ConstColors.primarycolor,
+              Consumer<BuyerProvider>(builder: (context, vm, child) {
+                return CircleAvatar(
+                  backgroundImage: NetworkImage(vm.imageURL),
+                  backgroundColor: ConstColors.thirdColor,
+                  radius: 60,
+                  child: vm.imageURL == ''
+                      ? Icon(
+                          Icons.camera_alt_outlined,
+                          size: 40,
+                          color: ConstColors.primarycolor,
+                        )
+                      : null,
+                );
+              }),
+              InkWell(
+                onTap: () {
+                  imagePicker('users', context);
+                  setState(() {});
+                },
+                child: CustomText(
+                  titletext: 'Select Profile',
+                  fontsize: smallText,
+                  bold: FontWeight.normal,
+                  textcolor: ConstColors.seconderyColor,
                 ),
-              ),
-              CustomText(
-                titletext: 'Select Profile',
-                fontsize: smallText,
-                bold: FontWeight.normal,
-                textcolor: ConstColors.seconderyColor,
               ),
               SizedBox(height: size.height * 0.06),
               CustomTextField(
@@ -63,8 +80,9 @@ class BuyerScreen extends StatelessWidget {
                 onTop: () {
                   var phoneNo = buyerProvider.phonenoController.text.trim();
                   var address = buyerProvider.addressController.text.trim();
+                  var imageURL = buyerProvider.imageURL;
 
-                  buyerRole(phoneNo, address, context);
+                  buyerRole(phoneNo, address, context, imageURL);
                 },
               ),
             ],
@@ -74,8 +92,8 @@ class BuyerScreen extends StatelessWidget {
     );
   }
 
-  Future<void> buyerRole(
-      String phoneNo, String address, BuildContext context) async {
+  Future<void> buyerRole(String phoneNo, String address, BuildContext context,
+      String imageURL) async {
     User? userId = FirebaseAuth.instance.currentUser;
 
     if (userId == null) {
@@ -93,6 +111,7 @@ class BuyerScreen extends StatelessWidget {
           .collection('users')
           .doc(userId.uid)
           .update({
+        'image': imageURL,
         'address': address,
         'phoneno': phoneNo,
         'role': 'buyer',
@@ -100,6 +119,8 @@ class BuyerScreen extends StatelessWidget {
       });
 
       Navigator.pushNamed(context, '/LoginScreen');
+      imageURL = '';
+
       flutterToast('Profile updated successfully.');
     } catch (e) {
       print(e);

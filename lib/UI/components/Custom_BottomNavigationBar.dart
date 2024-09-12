@@ -7,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sphere/UI/components/Shimmer/Shimmerfeeds.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Bottom_ControllerProvider.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 
@@ -25,10 +26,9 @@ class BottomNavigationBarScreen extends StatelessWidget {
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData || snapshot.data == null) {
-            return Center(child: CircularProgressIndicator());
+            return const ShimmerFeed();
           }
 
-          String role = snapshot.data!['role'] ?? '';
           return BottomBarInspiredOutside(
             elevation: 8,
             boxShadow: [
@@ -36,7 +36,7 @@ class BottomNavigationBarScreen extends StatelessWidget {
                   blurRadius: 5,
                   blurStyle: BlurStyle.normal,
                   color: ConstColors.blackColor,
-                  offset: Offset(-5, -5)),
+                  offset: const Offset(-5, -5)),
             ],
             curve: Curves.decelerate,
             animated: true,

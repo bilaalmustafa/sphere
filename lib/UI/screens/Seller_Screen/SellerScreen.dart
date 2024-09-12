@@ -6,18 +6,25 @@ import 'package:sphere/UI/components/Custom_Button.dart';
 import 'package:sphere/UI/components/Custom_LeadingBack.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
 import 'package:sphere/UI/components/Custom_TextField.dart';
+import 'package:sphere/UI/components/ImagePicker.dart';
+import 'package:sphere/UI/screens/Buyer_Screen/Buyer_Provider.dart';
 import 'package:sphere/UI/screens/Seller_Screen/Seller_Provider.dart';
-import 'package:sphere/UI/screens/auth/logIn_Screen/LognIn_Screen.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
 import 'package:sphere/core/constants/Flutertoast.dart';
 
-class SellerScreen extends StatelessWidget {
+class SellerScreen extends StatefulWidget {
   const SellerScreen({super.key});
 
   @override
+  State<SellerScreen> createState() => _SellerScreenState();
+}
+
+class _SellerScreenState extends State<SellerScreen> {
+  @override
   Widget build(BuildContext context) {
     final sellerProvider = Provider.of<SellerProvider>(context, listen: false);
+    final buyerProvider = Provider.of<BuyerProvider>(context, listen: false);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: ConstColors.primarycolor,
@@ -33,20 +40,31 @@ class SellerScreen extends StatelessWidget {
               SizedBox(
                 height: size.height * 0.03,
               ),
-              CircleAvatar(
-                backgroundColor: ConstColors.thirdColor,
-                radius: 60,
-                child: Icon(
-                  Icons.camera_alt_outlined,
-                  size: 40,
-                  color: ConstColors.primarycolor,
-                ),
+              Consumer<BuyerProvider>(builder: (context, vm, child) {
+                return CircleAvatar(
+                  backgroundImage: NetworkImage(vm.imageURL),
+                  backgroundColor: ConstColors.thirdColor,
+                  radius: 60,
+                  child: vm.imageURL == ''
+                      ? Icon(
+                          Icons.camera_alt_outlined,
+                          size: 40,
+                          color: ConstColors.primarycolor,
+                        )
+                      : null,
+                );
+              }),
+              InkWell(
+                onTap: () {
+                  imagePicker('users', context);
+                  setState(() {});
+                },
+                child: CustomText(
+                    titletext: 'Select brand logo',
+                    fontsize: smallText,
+                    bold: FontWeight.normal,
+                    textcolor: ConstColors.seconderyColor),
               ),
-              CustomText(
-                  titletext: 'Select brand logo',
-                  fontsize: smallText,
-                  bold: FontWeight.normal,
-                  textcolor: ConstColors.seconderyColor),
               SizedBox(
                 height: size.height * 0.06,
               ),
@@ -68,7 +86,8 @@ class SellerScreen extends StatelessWidget {
                         sellerProvider.brandnameContoller.text.trim();
                     var description =
                         sellerProvider.descriptionContoller.text.trim();
-                    sellerRole(brandname, description, context);
+                    var imageUrl = buyerProvider.imageURL;
+                    sellerRole(brandname, description, context, imageUrl);
                   })
             ],
           ),
@@ -77,8 +96,8 @@ class SellerScreen extends StatelessWidget {
     );
   }
 
-  Future<void> sellerRole(
-      String brandname, String description, BuildContext context) async {
+  Future<void> sellerRole(String brandname, String description,
+      BuildContext context, String imageURL) async {
     User? userId = FirebaseAuth.instance.currentUser;
 
     if (brandname.isEmpty || description.isEmpty) {
@@ -91,6 +110,7 @@ class SellerScreen extends StatelessWidget {
           .collection('users')
           .doc(userId!.uid)
           .update({
+        'image': imageURL,
         'brand': brandname,
         'description': description,
         'role': 'seller',
@@ -98,7 +118,8 @@ class SellerScreen extends StatelessWidget {
       });
 
       Navigator.pushNamed(context, '/LoginScreen');
-      flutterToast('Profile create successful !.');
+      imageURL = '';
+      flutterToast('Profile create successful');
     } catch (e) {
       print(e);
       flutterToast('Failed to create profile: ${e.toString()}');

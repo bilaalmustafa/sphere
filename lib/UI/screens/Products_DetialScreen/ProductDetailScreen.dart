@@ -33,12 +33,15 @@ class ProductDerailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final cartProvider = Provider.of<CartProvider>(context);
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
 
     return Scaffold(
       backgroundColor: ConstColors.primarycolor,
       appBar: AppBar(
         centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(color: ConstColors.primarycolor),
+        ),
         title: const CustomAppbarText(
           text: 'Detials',
         ),
@@ -67,7 +70,7 @@ class ProductDerailScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                      image: AssetImage(image), fit: BoxFit.fill),
+                      image: NetworkImage(image), fit: BoxFit.fill),
                 ),
               ),
               Padding(
@@ -213,7 +216,7 @@ class ProductDerailScreen extends StatelessWidget {
                   ),
                   Container(
                     child: CustomText(
-                        titletext: description.toString(),
+                        titletext: description,
                         fontsize: smallText,
                         bold: FontWeight.normal,
                         textcolor: ConstColors.blackColor),

@@ -10,8 +10,13 @@ import 'package:sphere/core/constants/Const_Colors.dart';
 
 class StoresScreen extends StatelessWidget {
   const StoresScreen(
-      {super.key, required this.brandname, required this.description});
-  final String brandname, description;
+      {super.key,
+      required this.brandname,
+      required this.description,
+      required this.uId,
+      required this.image});
+  final String brandname, description, image;
+  final String uId;
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +27,15 @@ class StoresScreen extends StatelessWidget {
         body: CustomScrollView(
           slivers: [
             CustomSliverStack(
-              size: size,
-              condition: 'StoresScreen',
-              brandname: brandname,
-              description: description,
-            ),
+                size: size,
+                condition: 'StoresScreen',
+                brandname: brandname,
+                description: description,
+                image: image),
             CustomSliverSearchBar(controller: storeProvider.searchController),
 
             CustomSliverGrid(
+              uId: uId,
               size: size,
               condition: 'StoresScreen',
             )

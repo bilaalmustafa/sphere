@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:sphere/UI/components/Custom_Button.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
 import 'package:sphere/UI/components/Custom_TextField.dart';
+import 'package:sphere/UI/components/ImagePicker.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Profile_Screens/StoreProfile_Controller.dart';
+import 'package:sphere/UI/screens/Buyer_Screen/Buyer_Provider.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 
 import 'Const_Heading.dart';
@@ -44,15 +46,22 @@ void showbottomsheet(context) {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: CircleAvatar(
-                    radius: size.height * 0.07,
-                    backgroundColor: ConstColors.thirdColor,
-                    child: Icon(
-                      Icons.camera_alt_outlined,
-                      size: 50,
-                      color: ConstColors.primarycolor,
-                    ),
-                  ),
+                  child: InkWell(onTap: () {
+                    imagePicker('products', context);
+                  }, child:
+                      Consumer<BuyerProvider>(builder: (context, vm, child) {
+                    return CircleAvatar(
+                        radius: size.height * 0.07,
+                        backgroundColor: ConstColors.thirdColor,
+                        backgroundImage: NetworkImage(vm.imageURL),
+                        child: vm.imageURL == ''
+                            ? Icon(
+                                Icons.camera_alt_outlined,
+                                size: 50,
+                                color: ConstColors.primarycolor,
+                              )
+                            : null);
+                  })),
                 ),
                 CustomTextField(
                     title: 'Title',
@@ -64,8 +73,7 @@ void showbottomsheet(context) {
                       width: 150,
                       child: CustomTextField(
                           title: 'Discount price',
-                          controller:
-                              storeProfileProvider.discriptionController),
+                          controller: storeProfileProvider.disPriceController),
                     ),
                     Container(
                       width: 120,
@@ -90,7 +98,7 @@ void showbottomsheet(context) {
                   maxLines: 6,
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(
-                        100), // Limits the number of characters to 100
+                        200), // Limits the number of characters to 100
                   ],
                   decoration: InputDecoration(
                       fillColor: ConstColors.thirdColor,
@@ -116,7 +124,22 @@ void showbottomsheet(context) {
                       buttontext: 'Add',
                       buttoncolor: ConstColors.seconderyColor,
                       btntextcolor: ConstColors.primarycolor,
-                      onTop: () {}),
+                      onTop: () {
+                        var productname =
+                            storeProfileProvider.titleController.text.trim();
+                        var disprice =
+                            storeProfileProvider.disPriceController.text.trim();
+                        var price =
+                            storeProfileProvider.priceController.text.trim();
+                        var stock =
+                            storeProfileProvider.stuckController.text.trim();
+                        var description = storeProfileProvider
+                            .discriptionController.text
+                            .trim();
+                        var intstock = int.tryParse(stock);
+                        storeProfileProvider.addproducts(productname, disprice,
+                            price, intstock!, description, context);
+                      }),
                 )
               ],
             ),
@@ -125,5 +148,4 @@ void showbottomsheet(context) {
       );
     },
   );
-  void addproducts() {}
 }

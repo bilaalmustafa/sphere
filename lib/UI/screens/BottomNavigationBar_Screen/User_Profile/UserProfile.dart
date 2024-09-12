@@ -1,19 +1,31 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sphere/UI/components/CustomAppbarText.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
+import 'package:sphere/UI/components/ImagePicker.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
 import 'package:sphere/core/constants/Flutertoast.dart';
 import 'package:sphere/generated/assets.dart';
 
-class UserProfile extends StatelessWidget {
+class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
 
   @override
+  State<UserProfile> createState() => _UserProfileState();
+}
+
+User? userId = FirebaseAuth.instance.currentUser;
+
+class _UserProfileState extends State<UserProfile> {
+  @override
   Widget build(BuildContext context) {
-    User? userId = FirebaseAuth.instance.currentUser;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: ConstColors.primarycolor,
       appBar: AppBar(
@@ -39,7 +51,7 @@ class UserProfile extends StatelessWidget {
             child: StreamBuilder<DocumentSnapshot>(
                 stream: FirebaseFirestore.instance
                     .collection('users')
-                    .doc(userId!.uid) // Assuming the document ID is the UID
+                    .doc(userId!.uid)
                     .snapshots(),
                 builder: (context, snapshot) {
                   try {
@@ -60,10 +72,27 @@ class UserProfile extends StatelessWidget {
                   return Column(
                     //mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircleAvatar(
-                        radius: 70,
-
-                        // backgroundImage: AssetImage(userdata['image']),
+                      Stack(
+                        children: [
+                          CircleAvatar(
+                            radius: 70,
+                            backgroundColor:
+                                ConstColors.seconderyColor.withOpacity(0.2),
+                            backgroundImage:
+                                NetworkImage(userdata['image'] ?? ''),
+                          ),
+                          Positioned(
+                              left: size.width * 0.05,
+                              child: InkWell(
+                                onTap: () {
+                                  imagePicker('users', context);
+                                },
+                                child: Icon(
+                                  Icons.camera_enhance,
+                                  color: ConstColors.seconderyColor,
+                                ),
+                              ))
+                        ],
                       ),
                       const SizedBox(
                         height: 10,

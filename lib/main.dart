@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/AllStore_Screen/AllStore_Provider.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Bottom_ControllerProvider.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Bottom_Screen.dart';
+import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Feeds_Screens/Feeds_Controller.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Profile_Screens/StoreProfile_Controller.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Stores_Screens/Stores_Provider.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Stores_Screens/Stores_Screen.dart';
@@ -11,6 +12,7 @@ import 'package:sphere/UI/screens/Buyer_Screen/BuyerScreen.dart';
 import 'package:sphere/UI/screens/Buyer_Screen/Buyer_Provider.dart';
 import 'package:sphere/UI/screens/Buyer_SellerScreen/BuyerSellerScreen.dart';
 import 'package:sphere/UI/screens/Cart_Screen/Cart_Provider.dart';
+import 'package:sphere/UI/screens/CreateAccount_Screen/CreateAccount.dart';
 import 'package:sphere/UI/screens/Products_DetialScreen/ProductDetial_Provider.dart';
 import 'package:sphere/UI/screens/Seller_Screen/SellerScreen.dart';
 import 'package:sphere/UI/screens/Seller_Screen/Seller_Provider.dart';
@@ -45,6 +47,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => BuyerProvider()),
         ChangeNotifierProvider(create: (context) => SellerProvider()),
         ChangeNotifierProvider(create: (context) => StoreProvider()),
+        ChangeNotifierProvider(create: (context) => FeedScreenProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -56,6 +59,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => const SplashScreen(),
+          '/CreateAnAccount': (context) => const CreateAccount(),
           '/SignupScreen': (context) => const SignUpScreen(),
           '/LoginScreen': (context) => const LoginScreen(),
           '/BuyerSeller': (context) => const BuyerSellerScreen(),

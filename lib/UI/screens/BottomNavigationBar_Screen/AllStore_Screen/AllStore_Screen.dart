@@ -109,7 +109,7 @@ class _AllStoreScreenState extends State<AllStoreScreen> {
                     final docs = snapshot.data!.docs;
                     return GridView.builder(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: docs.length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
@@ -126,8 +126,10 @@ class _AllStoreScreenState extends State<AllStoreScreen> {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
                                 return StoresScreen(
+                                  uId: doc['userId'],
                                   brandname: doc['brand'],
                                   description: doc['description'],
+                                  image: doc['image'],
                                 );
                               }));
                             },
@@ -141,11 +143,20 @@ class _AllStoreScreenState extends State<AllStoreScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  CircleAvatar(
-                                    backgroundColor: ConstColors.primarycolor,
-                                    radius: size.width * 0.13,
-                                    backgroundImage:
-                                        AssetImage(ImagesAssets.firstImage),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          size.width * 0.13,
+                                        ),
+                                        border: Border.all(
+                                            color: ConstColors.seconderyColor
+                                                .withOpacity(0.2))),
+                                    child: CircleAvatar(
+                                      backgroundColor: ConstColors.primarycolor,
+                                      radius: size.width * 0.13,
+                                      backgroundImage:
+                                          NetworkImage(doc['image']),
+                                    ),
                                   ),
                                   const CustonRatingWidget(),
                                   CustomText(

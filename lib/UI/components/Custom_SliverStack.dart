@@ -12,6 +12,8 @@ import 'package:sphere/core/constants/Const_Heading.dart';
 import 'package:sphere/core/constants/Flutertoast.dart';
 import 'package:sphere/generated/assets.dart';
 
+var globalname = '';
+
 class CustomSliverStack extends StatelessWidget {
   const CustomSliverStack({
     super.key,
@@ -20,11 +22,12 @@ class CustomSliverStack extends StatelessWidget {
     this.shadowclr,
     this.brandname,
     this.description,
+    this.image,
   });
   final String condition;
   final Size size;
   final Color? shadowclr;
-  final String? brandname, description;
+  final String? brandname, description, image;
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +48,33 @@ class CustomSliverStack extends StatelessWidget {
             : const CustomLeadingBack(),
         actions: [
           condition == 'StoreProfileScreen'
-              ? Icon(
-                  Icons.more_vert_outlined,
-                  color: ConstColors.seconderyColor,
+              ? PopupMenuButton(
+                  color: ConstColors.primarycolor,
+                  onSelected: (item) {},
+                  itemBuilder: (context) {
+                    return [
+                      PopupMenuItem(
+                          value: 1,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(
+                                Icons.edit,
+                                color: ConstColors.seconderyColor,
+                              ),
+                              CustomText(
+                                  titletext: 'Edit',
+                                  fontsize: normalText,
+                                  bold: FontWeight.w500,
+                                  textcolor: ConstColors.blackColor)
+                            ],
+                          ))
+                    ];
+                  },
+                  child: Icon(
+                    Icons.more_vert_outlined,
+                    color: ConstColors.seconderyColor,
+                  ),
                 )
               : const CustomCurt(),
           const SizedBox(
@@ -74,6 +101,7 @@ class CustomSliverStack extends StatelessWidget {
                 flutterToast(e.toString());
               }
               var data = snapshot.data!.data() as Map<String, dynamic>;
+              globalname = data['brand'];
 
               return FlexibleSpaceBar(
                 background: Padding(
@@ -136,7 +164,9 @@ class CustomSliverStack extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: ConstColors.primarycolor,
                             image: DecorationImage(
-                                image: AssetImage(ImagesAssets.forthImage),
+                                image: NetworkImage(condition == 'StoresScreen'
+                                    ? image
+                                    : data['image']),
                                 fit: BoxFit.fill),
                             border: Border.all(
                                 color: ConstColors.primarycolor, width: 5),

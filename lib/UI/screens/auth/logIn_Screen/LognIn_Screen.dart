@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         leading: InkWell(
           onTap: () {
-            Navigator.pop(context);
+            Navigator.pushNamed(context, '/CreateAnAccount');
           },
           child: Icon(
             Icons.arrow_back,
