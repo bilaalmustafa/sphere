@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +16,11 @@ import 'Const_Heading.dart';
 void showbottomsheet(context) {
   final storeProfileProvider =
       Provider.of<StoreProfileProvider>(context, listen: false);
+  final buyerProvider = Provider.of<BuyerProvider>(context, listen: false);
+
   Size size = MediaQuery.of(context).size;
+
+  ;
   showModalBottomSheet(
     context: context,
     isScrollControlled:
@@ -53,8 +59,10 @@ void showbottomsheet(context) {
                     return CircleAvatar(
                         radius: size.height * 0.07,
                         backgroundColor: ConstColors.thirdColor,
-                        backgroundImage: NetworkImage(vm.imageURL),
-                        child: vm.imageURL == ''
+                        backgroundImage: vm.imageFile != null
+                            ? FileImage(vm.imageFile!)
+                            : null,
+                        child: vm.imageFile == null
                             ? Icon(
                                 Icons.camera_alt_outlined,
                                 size: 50,
@@ -125,7 +133,7 @@ void showbottomsheet(context) {
                       buttoncolor: ConstColors.seconderyColor,
                       btntextcolor: ConstColors.primarycolor,
                       onTop: () {
-                        var productname =
+                        String productname =
                             storeProfileProvider.titleController.text.trim();
                         var disprice =
                             storeProfileProvider.disPriceController.text.trim();
@@ -137,8 +145,15 @@ void showbottomsheet(context) {
                             .discriptionController.text
                             .trim();
                         var intstock = int.tryParse(stock);
-                        storeProfileProvider.addproducts(productname, disprice,
-                            price, intstock!, description, context);
+                        storeProfileProvider.addproducts(
+                            productname,
+                            disprice,
+                            price,
+                            intstock!,
+                            description,
+                            context,
+                            buyerProvider.imageFile!);
+                        print('add fuction');
                       }),
                 )
               ],

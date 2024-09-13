@@ -16,18 +16,9 @@ Future<void> imagePicker(String collec, BuildContext context) async {
   print('kegeee');
   ImagePicker imagepicker = ImagePicker();
   XFile? file = await imagepicker.pickImage(source: ImageSource.gallery);
-
-  if (file! == null) return;
-
-  print('kegeee22');
-  String uniqueName = DateTime.now().millisecondsSinceEpoch.toString();
-  Reference refroot =
-      FirebaseStorage.instance.ref().child('image').child(uniqueName);
-  try {
-    await refroot.putFile(File(file!.path));
-    String downloadurl = await refroot.getDownloadURL();
-    buyerProvider.imageURL = downloadurl;
-  } catch (e) {
-    flutterToast('Failed:${e.toString()}');
+  if (file != null) {
+    buyerProvider.imageFile = File(file.path);
+  } else {
+    flutterToast('No image selected');
   }
 }

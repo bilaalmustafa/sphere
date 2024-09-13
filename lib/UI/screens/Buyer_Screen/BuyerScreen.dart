@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sphere/UI/components/Custom_Button.dart';
@@ -7,6 +10,7 @@ import 'package:sphere/UI/components/Custom_LeadingBack.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
 import 'package:sphere/UI/components/Custom_TextField.dart';
 import 'package:sphere/UI/components/ImagePicker.dart';
+import 'package:sphere/UI/components/Image_upload.dart';
 import 'package:sphere/UI/screens/Buyer_Screen/Buyer_Provider.dart';
 import 'package:sphere/UI/screens/auth/logIn_Screen/LognIn_Screen.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
@@ -23,7 +27,7 @@ class BuyerScreen extends StatefulWidget {
 class _BuyerScreenState extends State<BuyerScreen> {
   @override
   Widget build(BuildContext context) {
-    final buyerProvider = Provider.of<BuyerProvider>(context);
+    final buyerProvider = Provider.of<BuyerProvider>(context, listen: false);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: ConstColors.primarycolor,
@@ -39,10 +43,11 @@ class _BuyerScreenState extends State<BuyerScreen> {
               SizedBox(height: size.height * 0.03),
               Consumer<BuyerProvider>(builder: (context, vm, child) {
                 return CircleAvatar(
-                  backgroundImage: NetworkImage(vm.imageURL),
+                  backgroundImage:
+                      vm.imageFile == null ? null : FileImage(vm.imageFile!),
                   backgroundColor: ConstColors.thirdColor,
                   radius: 60,
-                  child: vm.imageURL == ''
+                  child: vm.imageFile == null
                       ? Icon(
                           Icons.camera_alt_outlined,
                           size: 40,
@@ -80,9 +85,9 @@ class _BuyerScreenState extends State<BuyerScreen> {
                 onTop: () {
                   var phoneNo = buyerProvider.phonenoController.text.trim();
                   var address = buyerProvider.addressController.text.trim();
-                  var imageURL = buyerProvider.imageURL;
 
-                  buyerRole(phoneNo, address, context, imageURL);
+                  buyerProvider.buyerRole(
+                      phoneNo, address, context, buyerProvider.imageFile!);
                 },
               ),
             ],
@@ -90,41 +95,5 @@ class _BuyerScreenState extends State<BuyerScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> buyerRole(String phoneNo, String address, BuildContext context,
-      String imageURL) async {
-    User? userId = FirebaseAuth.instance.currentUser;
-
-    if (userId == null) {
-      flutterToast("User is not logged in!");
-      return;
-    }
-
-    if (phoneNo.isEmpty || address.isEmpty) {
-      flutterToast("Please fill in all fields!");
-      return;
-    }
-
-    try {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId.uid)
-          .update({
-        'image': imageURL,
-        'address': address,
-        'phoneno': phoneNo,
-        'role': 'buyer',
-        'createAt': DateTime.now(),
-      });
-
-      Navigator.pushNamed(context, '/LoginScreen');
-      imageURL = '';
-
-      flutterToast('Profile updated successfully.');
-    } catch (e) {
-      print(e);
-      flutterToast('Failed to update profile: ${e.toString()}');
-    }
   }
 }

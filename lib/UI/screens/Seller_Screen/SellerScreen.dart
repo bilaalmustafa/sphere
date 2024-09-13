@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sphere/UI/components/Custom_Button.dart';
@@ -11,7 +9,6 @@ import 'package:sphere/UI/screens/Buyer_Screen/Buyer_Provider.dart';
 import 'package:sphere/UI/screens/Seller_Screen/Seller_Provider.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
-import 'package:sphere/core/constants/Flutertoast.dart';
 
 class SellerScreen extends StatefulWidget {
   const SellerScreen({super.key});
@@ -42,10 +39,10 @@ class _SellerScreenState extends State<SellerScreen> {
               ),
               Consumer<BuyerProvider>(builder: (context, vm, child) {
                 return CircleAvatar(
-                  backgroundImage: NetworkImage(vm.imageURL),
+                  backgroundImage: FileImage(vm.imageFile!),
                   backgroundColor: ConstColors.thirdColor,
                   radius: 60,
-                  child: vm.imageURL == ''
+                  child: vm.imageFile != null
                       ? Icon(
                           Icons.camera_alt_outlined,
                           size: 40,
@@ -57,7 +54,6 @@ class _SellerScreenState extends State<SellerScreen> {
               InkWell(
                 onTap: () {
                   imagePicker('users', context);
-                  setState(() {});
                 },
                 child: CustomText(
                     titletext: 'Select brand logo',
@@ -86,43 +82,14 @@ class _SellerScreenState extends State<SellerScreen> {
                         sellerProvider.brandnameContoller.text.trim();
                     var description =
                         sellerProvider.descriptionContoller.text.trim();
-                    var imageUrl = buyerProvider.imageURL;
-                    sellerRole(brandname, description, context, imageUrl);
+
+                    sellerProvider.sellerRole(brandname, description, context,
+                        buyerProvider.imageFile!);
                   })
             ],
           ),
         ),
       ),
     );
-  }
-
-  Future<void> sellerRole(String brandname, String description,
-      BuildContext context, String imageURL) async {
-    User? userId = FirebaseAuth.instance.currentUser;
-
-    if (brandname.isEmpty || description.isEmpty) {
-      flutterToast("Please fill in all fields!");
-      return;
-    }
-
-    try {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId!.uid)
-          .update({
-        'image': imageURL,
-        'brand': brandname,
-        'description': description,
-        'role': 'seller',
-        'createAt': DateTime.now(),
-      });
-
-      Navigator.pushNamed(context, '/LoginScreen');
-      imageURL = '';
-      flutterToast('Profile create successful');
-    } catch (e) {
-      print(e);
-      flutterToast('Failed to create profile: ${e.toString()}');
-    }
   }
 }

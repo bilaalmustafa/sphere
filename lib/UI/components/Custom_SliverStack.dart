@@ -68,7 +68,23 @@ class CustomSliverStack extends StatelessWidget {
                                   bold: FontWeight.w500,
                                   textcolor: ConstColors.blackColor)
                             ],
-                          ))
+                          )),
+                      PopupMenuItem(
+                          value: 1,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(
+                                Icons.branding_watermark,
+                                color: ConstColors.seconderyColor,
+                              ),
+                              CustomText(
+                                  titletext: 'Ads',
+                                  fontsize: normalText,
+                                  bold: FontWeight.w500,
+                                  textcolor: ConstColors.blackColor)
+                            ],
+                          )),
                     ];
                   },
                   child: Icon(
