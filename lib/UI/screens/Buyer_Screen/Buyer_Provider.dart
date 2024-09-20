@@ -32,7 +32,6 @@ class BuyerProvider extends ChangeNotifier {
   Future<void> buyerRole(String phoneNo, String address, BuildContext context,
       File imageFile) async {
     User? userId = FirebaseAuth.instance.currentUser;
-    // final buyeProvider = Provider.of<BuyerProvider>(context, listen: false);
 
     if (userId == null) {
       flutterToast("User is not logged in!");
@@ -70,9 +69,9 @@ class BuyerProvider extends ChangeNotifier {
       Navigator.pushNamed(context, '/LoginScreen');
       // imageFile = null;
 
-      flutterToast('Profile updated successfully.');
+      flutterToast('Profile create successfully.');
     } catch (e) {
-      flutterToast('Failed to update profile: ${e.toString()}');
+      flutterToast('Failed to create profile: ${e.toString()}');
     }
     notifyListeners();
   }

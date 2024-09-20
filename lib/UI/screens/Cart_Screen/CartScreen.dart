@@ -57,7 +57,7 @@ class _MyWidgetState extends State<CartScreen> {
               builder: (context, vm, child) => Expanded(
                 child: ListView.builder(
                     shrinkWrap: true,
-                    padding: EdgeInsets.all(0),
+                    padding: const EdgeInsets.all(0),
                     itemCount: vm.cart.length,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -78,13 +78,14 @@ class _MyWidgetState extends State<CartScreen> {
                                   width: 120,
                                   // color: Colors.black,
                                   decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: ConstColors.customGrey
-                                              .withOpacity(0.2)),
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              vm.cart[index]['image']),
-                                          fit: BoxFit.cover)),
+                                    border: Border.all(
+                                        color: ConstColors.customGrey
+                                            .withOpacity(0.2)),
+                                    // image: DecorationImage(
+                                    //     image: NetworkImage(
+                                    //         vm.cart[index]['image']),
+                                    //     fit: BoxFit.cover)
+                                  ),
                                 ),
                                 Expanded(
                                   flex: 1,
@@ -97,13 +98,13 @@ class _MyWidgetState extends State<CartScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         CustomText(
-                                            titletext: vm.cart[index]['store'],
+                                            titletext: vm.cart[index].shopname,
                                             fontsize: normalText,
                                             bold: FontWeight.w500,
                                             textcolor: ConstColors.customGrey),
                                         CustomText(
                                             titletext:
-                                                '\$ ${vm.cart[index]['discountprice'].toString()}',
+                                                '\$ ${vm.cart[index].price.toString()}',
                                             fontsize: Heading3,
                                             bold: FontWeight.w600,
                                             textcolor:
@@ -117,8 +118,7 @@ class _MyWidgetState extends State<CartScreen> {
                                                 textcolor:
                                                     ConstColors.customGrey),
                                             CustomText(
-                                                titletext: vm.cart[index]
-                                                        ['size']
+                                                titletext: vm.cart[index].size
                                                     .toString(),
                                                 fontsize: normalText,
                                                 bold: FontWeight.w500,
@@ -135,7 +135,7 @@ class _MyWidgetState extends State<CartScreen> {
                                                 textcolor:
                                                     ConstColors.customGrey),
                                             CustomText(
-                                                titletext: vm.cart[index]['Qty']
+                                                titletext: vm.cart[index].qty
                                                     .toString(),
                                                 fontsize: normalText,
                                                 bold: FontWeight.w500,
@@ -167,8 +167,8 @@ class _MyWidgetState extends State<CartScreen> {
                                         ),
                                       ),
                                       CustomText(
-                                          titletext: vm.cart[index][vm.quantity]
-                                              .toString(),
+                                          titletext:
+                                              vm.cart[index].qty.toString(),
                                           fontsize: smallText,
                                           bold: FontWeight.w600,
                                           textcolor: ConstColors.blackColor),

@@ -1,10 +1,8 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sphere/UI/components/CostomCarousalSlider.dart';
 import 'package:sphere/UI/components/CustomAppbarText.dart';
-import 'package:sphere/UI/components/Custom_LeadingBack.dart';
 import 'package:sphere/UI/components/Custom_RatingWidget.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
 import 'package:sphere/UI/components/Shimmer/ShimmerAllSore.dart';
@@ -13,9 +11,6 @@ import 'package:sphere/UI/screens/BottomNavigationBar_Screen/AllStore_Screen/All
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Stores_Screens/Stores_Screen.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
-import 'package:sphere/core/constants/Const_text.dart';
-import 'package:sphere/core/constants/Flutertoast.dart';
-import 'package:sphere/generated/assets.dart';
 
 class AllStoreScreen extends StatefulWidget {
   const AllStoreScreen({super.key});

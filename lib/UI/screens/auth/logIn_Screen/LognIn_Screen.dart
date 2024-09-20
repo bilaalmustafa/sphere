@@ -1,14 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sphere/UI/components/Custom_Button.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
 import 'package:sphere/UI/components/Custom_TextField.dart';
-import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Bottom_Screen.dart';
 import 'package:sphere/UI/screens/auth/logIn_Screen/logIn_controller.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_text.dart';
-import 'package:sphere/core/constants/Flutertoast.dart';
 import 'package:sphere/generated/assets.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -17,7 +14,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final logInControllerProvider =
-        Provider.of<LogInControllerPrivoder>(context);
+        Provider.of<LogInControllerPrivoder>(context, listen: false);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: ConstColors.primarycolor,
@@ -78,34 +75,12 @@ class LoginScreen extends StatelessWidget {
                     var password = logInControllerProvider
                         .loginpasswordController.text
                         .trim();
-                    signIn(email, password, context);
+                    logInControllerProvider.signIn(email, password, context);
                   })
             ],
           ),
         ),
       ),
     );
-  }
-
-  Future<void> signIn(String email, String password, context) async {
-    if (email.isEmpty || password.isEmpty) {
-      flutterToast('Please fill in all fields');
-    }
-
-    if (password.length < 6) {
-      flutterToast('Password must be at least 6 characters long');
-    }
-
-    try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password)
-          .then((value) {
-        flutterToast('Log in successful !');
-        Navigator.pushNamed(context, '/NavigationBottomScreen');
-      });
-    } catch (e) {
-      print(e);
-      flutterToast('Failed to Log up:');
-    }
   }
 }

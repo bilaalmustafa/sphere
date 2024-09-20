@@ -1,17 +1,12 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:sphere/UI/components/CustomAppbarText.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
 import 'package:sphere/UI/components/ImagePicker.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
 import 'package:sphere/core/constants/Flutertoast.dart';
-import 'package:sphere/generated/assets.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});

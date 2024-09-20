@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:sphere/UI/components/Custom_RatingWidget.dart';
-import 'package:sphere/UI/components/Custom_Text.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/generated/assets.dart';
 

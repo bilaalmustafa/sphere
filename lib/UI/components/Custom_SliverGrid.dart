@@ -2,17 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sphere/UI/components/Custom_CartButton.dart';
+import 'package:sphere/UI/components/Custom_PopMenu_item.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
 import 'package:sphere/UI/components/Custom_WishList.dart';
 import 'package:sphere/UI/components/Shimmer/SlivergrideShimmer.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Feeds_Screens/Feeds_Controller.dart';
-import 'package:sphere/UI/screens/Cart_Screen/Cart_Provider.dart';
-import 'package:sphere/UI/screens/Products_DetialScreen/ProductDetailScreen.dart';
+import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Profile_Screens/StoreProfile_Controller.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
-import 'package:sphere/generated/assets.dart';
-import 'package:sphere/models/demeModel.dart';
+import 'package:sphere/core/constants/showBottomSheet.dart';
 
 class CustomSliverGrid extends StatelessWidget {
   CustomSliverGrid({
@@ -31,9 +29,10 @@ class CustomSliverGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('build');
-    final cartProvider = Provider.of<CartProvider>(context, listen: false);
     final feedScreenProvider =
         Provider.of<FeedScreenProvider>(context, listen: false);
+    final storeProfireProvider =
+        Provider.of<StoreProfileProvider>(context, listen: false);
     User? userId = FirebaseAuth.instance.currentUser;
     String check() {
       if (condition == 'StoresScreen') {
@@ -117,58 +116,46 @@ class CustomSliverGrid extends StatelessWidget {
                                         padding: const EdgeInsets.all(8.0),
                                         child: condition == 'StoreProfileScreen'
                                             ? PopupMenuButton(
-                                                onSelected: (item) {},
+                                                color: ConstColors.primarycolor,
+                                                onSelected: (int value) {
+                                                  if (value == 1) {
+                                                    showbottomsheet(
+                                                        context,
+                                                        'update',
+                                                        data['productname']
+                                                            .toString(),
+                                                        data['discountprice'],
+                                                        data['price'],
+                                                        data['stock'],
+                                                        data['discreption']
+                                                            .toString(),
+                                                        data['image'],
+                                                        data.id);
+                                                  } else if (value == 2) {
+                                                    storeProfireProvider
+                                                        .deleteProduct(data.id);
+                                                  }
+                                                },
                                                 itemBuilder: (context) {
                                                   return [
                                                     PopupMenuItem(
                                                         value: 1,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceAround,
-                                                          children: [
-                                                            Icon(
-                                                              Icons.edit,
-                                                              color: ConstColors
-                                                                  .seconderyColor,
-                                                            ),
-                                                            CustomText(
-                                                                titletext:
-                                                                    'Edit',
-                                                                fontsize:
-                                                                    normalText,
-                                                                bold: FontWeight
-                                                                    .w500,
-                                                                textcolor:
-                                                                    ConstColors
-                                                                        .blackColor)
-                                                          ],
+                                                        child:
+                                                            CustomPopMenuItem(
+                                                          text: 'Edit',
+                                                          icon: Icons.edit,
+                                                          color: ConstColors
+                                                              .seconderyColor,
                                                         )),
                                                     PopupMenuItem(
-                                                        value: 1,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceAround,
-                                                          children: [
-                                                            Icon(
-                                                              Icons
-                                                                  .delete_forever_outlined,
-                                                              color: ConstColors
-                                                                  .CustomRed,
-                                                            ),
-                                                            CustomText(
-                                                                titletext:
-                                                                    'Delete',
-                                                                fontsize:
-                                                                    normalText,
-                                                                bold: FontWeight
-                                                                    .w500,
-                                                                textcolor:
-                                                                    ConstColors
-                                                                        .blackColor)
-                                                          ],
-                                                        ))
+                                                        value: 2,
+                                                        child:
+                                                            CustomPopMenuItem(
+                                                          text: 'Delete',
+                                                          icon: Icons.delete,
+                                                          color: ConstColors
+                                                              .CustomRed,
+                                                        )),
                                                   ];
                                                 },
                                                 child: CustomWishList(

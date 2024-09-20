@@ -7,7 +7,6 @@ import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Bottom_Screen.dart'
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Feeds_Screens/Feeds_Controller.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Profile_Screens/StoreProfile_Controller.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Stores_Screens/Stores_Provider.dart';
-import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Stores_Screens/Stores_Screen.dart';
 import 'package:sphere/UI/screens/Buyer_Screen/BuyerScreen.dart';
 import 'package:sphere/UI/screens/Buyer_Screen/Buyer_Provider.dart';
 import 'package:sphere/UI/screens/Buyer_SellerScreen/BuyerSellerScreen.dart';

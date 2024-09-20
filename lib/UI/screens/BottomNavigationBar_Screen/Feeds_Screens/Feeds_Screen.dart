@@ -1,30 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sphere/UI/components/CustomAppbarText.dart';
-import 'package:sphere/UI/components/Custom_CartButton.dart';
 import 'package:sphere/UI/components/Custom_Drawer.dart';
-import 'package:sphere/UI/components/Custom_SendButton.dart';
 import 'package:sphere/UI/components/Custom_ShopNowButton.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
 import 'package:sphere/UI/components/Custom_WishList.dart';
 import 'package:sphere/UI/components/Shimmer/Shimmerfeeds.dart';
 import 'package:sphere/UI/components/custom_Curt.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Feeds_Screens/Feeds_Controller.dart';
-import 'package:sphere/UI/screens/Products_DetialScreen/ProductDetailScreen.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
-import 'package:sphere/core/constants/Const_text.dart';
-import 'package:sphere/generated/assets.dart';
-import 'package:sphere/models/demeModel.dart';
 
 class FeedsScreen extends StatelessWidget {
   const FeedsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     final feedScreenProvider =
         Provider.of<FeedScreenProvider>(context, listen: false);
     return Scaffold(

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:sphere/UI/components/Custom_LeadingBack.dart';
 import 'package:sphere/UI/components/Custom_RatingWidget.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
@@ -10,7 +9,6 @@ import 'package:sphere/UI/components/custom_Curt.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
 import 'package:sphere/core/constants/Flutertoast.dart';
-import 'package:sphere/generated/assets.dart';
 
 var globalname = '';
 

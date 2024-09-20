@@ -1,8 +1,3 @@
-import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sphere/UI/components/Custom_Button.dart';
@@ -10,12 +5,9 @@ import 'package:sphere/UI/components/Custom_LeadingBack.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
 import 'package:sphere/UI/components/Custom_TextField.dart';
 import 'package:sphere/UI/components/ImagePicker.dart';
-import 'package:sphere/UI/components/Image_upload.dart';
 import 'package:sphere/UI/screens/Buyer_Screen/Buyer_Provider.dart';
-import 'package:sphere/UI/screens/auth/logIn_Screen/LognIn_Screen.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
-import 'package:sphere/core/constants/Flutertoast.dart';
 
 class BuyerScreen extends StatefulWidget {
   const BuyerScreen({super.key});
@@ -59,7 +51,7 @@ class _BuyerScreenState extends State<BuyerScreen> {
               InkWell(
                 onTap: () {
                   imagePicker('users', context);
-                  setState(() {});
+                  ;
                 },
                 child: CustomText(
                   titletext: 'Select Profile',

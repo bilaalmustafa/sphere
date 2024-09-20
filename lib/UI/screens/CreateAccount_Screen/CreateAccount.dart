@@ -3,8 +3,6 @@ import 'package:draggable_carousel_slider/draggable_carousel_slider.dart';
 import 'package:sphere/UI/components/CustomImage_Container.dart';
 import 'package:sphere/UI/components/Custom_Button.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
-import 'package:sphere/UI/screens/auth/SignUp_Screen/SignUp_Screen.dart';
-import 'package:sphere/UI/screens/auth/logIn_Screen/LognIn_Screen.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_text.dart';
 import 'package:sphere/generated/assets.dart';

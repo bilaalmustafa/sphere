@@ -125,7 +125,7 @@ class CheckOutScreen extends StatelessWidget {
                   bold: FontWeight.w500,
                   textcolor: ConstColors.blackColor),
               ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: 5,
                   itemBuilder: (context, index) {

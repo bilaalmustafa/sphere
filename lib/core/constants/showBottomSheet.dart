@@ -13,19 +13,35 @@ import 'package:sphere/core/constants/Const_Colors.dart';
 
 import 'Const_Heading.dart';
 
-void showbottomsheet(context) {
+void showbottomsheet(
+    BuildContext context,
+    String update,
+    String title,
+    double disPrice,
+    double price,
+    int stock,
+    String description,
+    String image,
+    String productid) {
   final storeProfileProvider =
       Provider.of<StoreProfileProvider>(context, listen: false);
   final buyerProvider = Provider.of<BuyerProvider>(context, listen: false);
 
   Size size = MediaQuery.of(context).size;
-
-  ;
+  TextEditingController titLecontroller = TextEditingController(text: title);
+  TextEditingController discountPricecontroller =
+      TextEditingController(text: disPrice.toString());
+  TextEditingController priceController =
+      TextEditingController(text: price.toString());
+  TextEditingController stockController =
+      TextEditingController(text: stock.toString());
+  TextEditingController descriptController =
+      TextEditingController(text: description);
   showModalBottomSheet(
     context: context,
-    isScrollControlled:
-        true, // Allows the bottom sheet to extend beyond the default height
+    isScrollControlled: true,
     builder: (BuildContext context) {
+      print('showwwww');
       return Padding(
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -57,23 +73,24 @@ void showbottomsheet(context) {
                   }, child:
                       Consumer<BuyerProvider>(builder: (context, vm, child) {
                     return CircleAvatar(
-                        radius: size.height * 0.07,
-                        backgroundColor: ConstColors.thirdColor,
-                        backgroundImage: vm.imageFile != null
-                            ? FileImage(vm.imageFile!)
-                            : null,
-                        child: vm.imageFile == null
-                            ? Icon(
-                                Icons.camera_alt_outlined,
-                                size: 50,
-                                color: ConstColors.primarycolor,
-                              )
-                            : null);
+                      radius: size.height * 0.07,
+                      backgroundColor: ConstColors.thirdColor,
+                      backgroundImage: vm.imageFile != null
+                          ? FileImage(vm.imageFile!)
+                          : (update == 'update' && vm.imageFile == null
+                              ? NetworkImage(image)
+                              : null) as ImageProvider<Object>?,
+                      child: vm.imageFile == null && update == 'add'
+                          ? Icon(
+                              Icons.camera_alt_outlined,
+                              size: 50,
+                              color: ConstColors.primarycolor,
+                            )
+                          : null,
+                    );
                   })),
                 ),
-                CustomTextField(
-                    title: 'Title',
-                    controller: storeProfileProvider.titleController),
+                CustomTextField(title: 'Title', controller: titLecontroller),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -81,13 +98,12 @@ void showbottomsheet(context) {
                       width: 150,
                       child: CustomTextField(
                           title: 'Discount price',
-                          controller: storeProfileProvider.disPriceController),
+                          controller: discountPricecontroller),
                     ),
                     Container(
                       width: 120,
                       child: CustomTextField(
-                          title: 'Price',
-                          controller: storeProfileProvider.priceController),
+                          title: 'Price', controller: priceController),
                     ),
                   ],
                 ),
@@ -96,17 +112,16 @@ void showbottomsheet(context) {
                     Container(
                       width: 150,
                       child: CustomTextField(
-                          title: 'Availible stuck',
-                          controller: storeProfileProvider.stuckController),
+                          title: 'Availible stock',
+                          controller: stockController),
                     ),
                   ],
                 ),
                 TextFormField(
-                  controller: storeProfileProvider.discriptionController,
+                  controller: descriptController,
                   maxLines: 6,
                   inputFormatters: [
-                    LengthLimitingTextInputFormatter(
-                        200), // Limits the number of characters to 100
+                    LengthLimitingTextInputFormatter(300),
                   ],
                   decoration: InputDecoration(
                       fillColor: ConstColors.thirdColor,
@@ -129,31 +144,40 @@ void showbottomsheet(context) {
                 Padding(
                   padding: const EdgeInsets.only(top: 30),
                   child: CustomButton(
-                      buttontext: 'Add',
+                      buttontext: update != 'update' ? 'Add' : 'Update',
                       buttoncolor: ConstColors.seconderyColor,
                       btntextcolor: ConstColors.primarycolor,
                       onTop: () {
-                        String productname =
-                            storeProfileProvider.titleController.text.trim();
-                        var disprice =
-                            storeProfileProvider.disPriceController.text.trim();
-                        var price =
-                            storeProfileProvider.priceController.text.trim();
-                        var stock =
-                            storeProfileProvider.stuckController.text.trim();
-                        var description = storeProfileProvider
-                            .discriptionController.text
-                            .trim();
-                        var intstock = int.tryParse(stock);
-                        storeProfileProvider.addproducts(
-                            productname,
-                            disprice,
-                            price,
-                            intstock!,
-                            description,
-                            context,
-                            buyerProvider.imageFile!);
-                        print('add fuction');
+                        int? intstock =
+                            int.tryParse(stockController.text.trim());
+                        double? doubledisprice = double.tryParse(
+                            discountPricecontroller.text.trim());
+                        double? doubleprice =
+                            double.tryParse(priceController.text.trim());
+
+                        if (update != 'update') {
+                          storeProfileProvider.addproducts(
+                              titLecontroller.text.trim(),
+                              doubledisprice!,
+                              doubleprice!,
+                              intstock!,
+                              descriptController.text.trim(),
+                              context,
+                              buyerProvider.imageFile!);
+                          print('update fuction');
+                        } else {
+                          storeProfileProvider.updateProduct(
+                              context,
+                              titLecontroller.text.trim(),
+                              doubledisprice!,
+                              doubleprice!,
+                              intstock!,
+                              descriptController.text.trim(),
+                              buyerProvider.imageFile!,
+                              productid);
+                          print('add fuction');
+                        }
+                        ;
                       }),
                 )
               ],
