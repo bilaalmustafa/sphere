@@ -3,6 +3,7 @@ import 'package:sphere/UI/screens/Products_DetialScreen/ProductDetailScreen.dart
 
 class FeedScreenProvider with ChangeNotifier {
   void navigator(final data, BuildContext context) {
+    String userId = data['userid'] ?? '';
     String image = data['image'] ?? ''; // Default to an empty string if null
     String storename =
         data['brandname'] ?? 'Unknown Brand'; // Provide a default brand name
@@ -17,6 +18,7 @@ class FeedScreenProvider with ChangeNotifier {
 
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return ProductDerailScreen(
+        brandId: userId,
         image: image,
         storename: storename,
         price: price,

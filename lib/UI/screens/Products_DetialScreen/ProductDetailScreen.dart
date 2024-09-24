@@ -11,7 +11,7 @@ import 'package:sphere/UI/screens/Cart_Screen/Cart_Provider.dart';
 import 'package:sphere/UI/screens/Products_DetialScreen/ProductDetial_Provider.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
-import 'package:sphere/core/constants/Const_text.dart';
+import 'package:sphere/core/constants/Flutertoast.dart';
 import 'package:sphere/models/cartModel.dart';
 
 class ProductDerailScreen extends StatefulWidget {
@@ -23,8 +23,9 @@ class ProductDerailScreen extends StatefulWidget {
       required this.discountprice,
       required this.description,
       required this.stock,
-      required this.image});
-
+      required this.image,
+      required this.brandId});
+  final String brandId;
   final String storename;
   final double price;
   final double discountprice;
@@ -251,12 +252,22 @@ class _ProductDerailScreenState extends State<ProductDerailScreen> {
                 buttoncolor: ConstColors.seconderyColor,
                 btntextcolor: ConstColors.primarycolor,
                 onTop: () {
-                  cartProvider.cart.add(Cart(
-                      shopname: widget.storename,
-                      itemname: widget.productname,
-                      price: widget.price,
-                      size: sizes,
-                      qty: 1));
+                  print(widget.storename);
+
+                  if (cartProvider.cart.isEmpty ||
+                      cartProvider.cart[0].shopname == widget.storename) {
+                    cartProvider.addToCart(Cart(
+                        brandId: widget.brandId,
+                        image: widget.image,
+                        shopname: widget.storename,
+                        itemname: widget.productname,
+                        price: widget.price,
+                        size: sizes,
+                        qty: 1));
+                    print(cartProvider.cart[0].shopname);
+                  } else {
+                    flutterToast("You can't add from difference store");
+                  }
 
                   Navigator.pop(context);
                 },

@@ -39,10 +39,11 @@ class _SellerScreenState extends State<SellerScreen> {
               ),
               Consumer<BuyerProvider>(builder: (context, vm, child) {
                 return CircleAvatar(
-                  backgroundImage: FileImage(vm.imageFile!),
+                  backgroundImage:
+                      vm.imageFile == null ? null : FileImage(vm.imageFile!),
                   backgroundColor: ConstColors.thirdColor,
                   radius: 60,
-                  child: vm.imageFile != null
+                  child: vm.imageFile == null
                       ? Icon(
                           Icons.camera_alt_outlined,
                           size: 40,

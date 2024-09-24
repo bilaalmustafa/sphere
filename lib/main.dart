@@ -11,6 +11,7 @@ import 'package:sphere/UI/screens/Buyer_Screen/BuyerScreen.dart';
 import 'package:sphere/UI/screens/Buyer_Screen/Buyer_Provider.dart';
 import 'package:sphere/UI/screens/Buyer_SellerScreen/BuyerSellerScreen.dart';
 import 'package:sphere/UI/screens/Cart_Screen/Cart_Provider.dart';
+import 'package:sphere/UI/screens/CheckOut_Screen/Check_out_Provider.dart';
 import 'package:sphere/UI/screens/CreateAccount_Screen/CreateAccount.dart';
 import 'package:sphere/UI/screens/Products_DetialScreen/ProductDetial_Provider.dart';
 import 'package:sphere/UI/screens/Seller_Screen/SellerScreen.dart';
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SellerProvider()),
         ChangeNotifierProvider(create: (context) => StoreProvider()),
         ChangeNotifierProvider(create: (context) => FeedScreenProvider()),
+        ChangeNotifierProvider(create: (context) => CheckOutProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

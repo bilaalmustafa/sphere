@@ -61,11 +61,11 @@ class BottomNavigationBarScreen extends StatelessWidget {
                 title: 'Chat',
               ),
               TabItem(
-                  icon: snapshot.data!['role'] == 'buyer'
-                      ? CupertinoIcons.profile_circled
-                      : Icons.storefront,
+                  icon: snapshot.data!['role'] == 'seller'
+                      ? Icons.storefront
+                      : CupertinoIcons.profile_circled,
                   title:
-                      snapshot.data!['role'] == 'buyer' ? 'Profile' : 'Store')
+                      snapshot.data!['role'] == 'seller' ? 'Store' : 'Profile')
             ],
             backgroundColor: ConstColors.primarycolor,
             color: ConstColors.seconderyColor,

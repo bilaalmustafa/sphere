@@ -14,7 +14,7 @@ class BottomControllerProvider with ChangeNotifier {
     const AllStoreScreen(),
     const ChatScreen(),
     const Center(
-      child: CircularProgressIndicator(), // Temporary loading screen
+      child: CircularProgressIndicator(),
     ),
   ];
 
@@ -22,7 +22,7 @@ class BottomControllerProvider with ChangeNotifier {
   List<Widget> get screens => _screens;
 
   BottomControllerProvider() {
-    fetchUserRole(); // Fetch user role when the provider is initialized
+    fetchUserRole();
   }
 
   void changeTab(int value) {
@@ -33,6 +33,11 @@ class BottomControllerProvider with ChangeNotifier {
   Future<void> fetchUserRole() async {
     try {
       User? userId = FirebaseAuth.instance.currentUser;
+      if (ConnectionState == ConnectionState.waiting) {
+        const Center(
+          child: CircularProgressIndicator(),
+        );
+      }
 
       if (userId != null) {
         DocumentSnapshot snapshot = await FirebaseFirestore.instance
@@ -41,11 +46,10 @@ class BottomControllerProvider with ChangeNotifier {
             .get();
 
         if (snapshot.exists) {
-          if (snapshot['role'] == 'buyer') {
-            _screens[3] = const UserProfile(); // Show UserProfile for buyers
+          if (snapshot['role'] == 'seller') {
+            _screens[3] = const StoreProfileScreen();
           } else {
-            _screens[3] =
-                const StoreProfileScreen(); // Show StoreProfile for sellers
+            _screens[3] = const UserProfile();
           }
         }
       }
@@ -53,7 +57,7 @@ class BottomControllerProvider with ChangeNotifier {
       print("Error fetching user role: $e");
       _screens[3] = const Center(child: Text("Error loading profile"));
     } finally {
-      notifyListeners(); // Notify listeners after updating the screens
+      notifyListeners();
     }
   }
 }

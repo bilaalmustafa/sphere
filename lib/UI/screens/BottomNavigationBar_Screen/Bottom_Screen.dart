@@ -16,10 +16,15 @@ class _NevigationBottomState extends State<NevigationBottomScreen> {
   Widget build(BuildContext context) {
     final provider = Provider.of<BottomControllerProvider>(context);
 
-    return Scaffold(
-      backgroundColor: ConstColors.thirdColor,
-      body: provider.screens[provider.selectItem],
-      bottomNavigationBar: const BottomNavigationBarScreen(),
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: ConstColors.thirdColor,
+        body: provider.screens[provider.selectItem],
+        bottomNavigationBar: const BottomNavigationBarScreen(),
+      ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
+import 'package:sphere/UI/screens/Order_Screen.dart';
 import 'package:sphere/UI/screens/auth/logIn_Screen/logIn_controller.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
@@ -74,8 +75,10 @@ class CustomDrawer extends StatelessWidget {
                           ),
                           title: const Text('Orders'),
                           onTap: () {
-                            // Close the drawer and navigate
-                            Navigator.pop(context);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return const OrderScreen();
+                            }));
                           })
                       : Container(),
                   ListTile(

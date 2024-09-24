@@ -7,4 +7,5 @@ class ImagesAssets {
   static var backicon = 'Assets/Icons/arrowback.png';
   static var logo = 'Assets/Images/logo.png';
   static var mycart = 'Assets/Images/Salford.png';
+  static var empty = 'Assets/Icons/empty.png';
 }

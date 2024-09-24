@@ -63,7 +63,7 @@ class _UserProfileState extends State<UserProfile> {
                   } catch (e) {
                     flutterToast(e.toString());
                   }
-                  var userdata = snapshot.data!.data() as Map<String, dynamic>;
+                  var userdata = snapshot.data!;
                   return Column(
                     //mainAxisAlignment: MainAxisAlignment.center,
                     children: [
