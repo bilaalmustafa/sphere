@@ -29,10 +29,11 @@ class CustomSliverGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('build');
-    final feedScreenProvider =
-        Provider.of<FeedScreenProvider>(context, listen: false);
     final storeProfireProvider =
         Provider.of<StoreProfileProvider>(context, listen: false);
+    final feedScreenProvider =
+        Provider.of<FeedScreenProvider>(context, listen: false);
+    // final storeProvider = Provider.of<StoreProvider>(context, listen: false);
     User? userId = FirebaseAuth.instance.currentUser;
     String check() {
       if (condition == 'StoresScreen') {
@@ -48,9 +49,6 @@ class CustomSliverGrid extends StatelessWidget {
             .where('userid', isEqualTo: check())
             .snapshots(),
         builder: (context, snapshot) {
-          print('checkkk ${check().toString()}');
-          print('uiddd ${uId.toString()}');
-
           if (!snapshot.hasData ||
               snapshot.data == null ||
               snapshot.hasError ||
@@ -120,6 +118,7 @@ class CustomSliverGrid extends StatelessWidget {
                                                 onSelected: (int value) {
                                                   if (value == 1) {
                                                     showbottomsheet(
+                                                        userId!.uid,
                                                         context,
                                                         'update',
                                                         data['productname']

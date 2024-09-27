@@ -57,8 +57,8 @@ class BottomNavigationBarScreen extends StatelessWidget {
               //   title: 'wishlist',
               // ),
               const TabItem(
-                icon: CupertinoIcons.chat_bubble,
-                title: 'Chat',
+                icon: CupertinoIcons.heart,
+                title: 'Wishlist',
               ),
               TabItem(
                   icon: snapshot.data!['role'] == 'seller'

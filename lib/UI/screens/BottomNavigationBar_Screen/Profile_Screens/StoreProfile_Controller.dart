@@ -22,11 +22,16 @@ class StoreProfileProvider with ChangeNotifier {
   TextEditingController get stuckController => _stuckController;
   TextEditingController get discriptionController => _discriptionController;
 
-  void addproducts(String productname, double disprice, double price, int stock,
-      String description, BuildContext context, File imageFile) async {
+  void addproducts(
+      String userid,
+      String productname,
+      double disprice,
+      double price,
+      int stock,
+      String description,
+      BuildContext context,
+      File? imageFile) async {
     final buyerProvider = Provider.of<BuyerProvider>(context, listen: false);
-
-    User? userId = FirebaseAuth.instance.currentUser;
 
     if (productname.isEmpty ||
         disprice.toString().isEmpty ||
@@ -41,7 +46,7 @@ class StoreProfileProvider with ChangeNotifier {
       String uniqueName = DateTime.now().millisecondsSinceEpoch.toString();
       Reference refroot =
           FirebaseStorage.instance.ref().child('image').child(uniqueName);
-      await refroot.putFile(File(imageFile.path));
+      await refroot.putFile(File(imageFile!.path));
       String downloadurl = await refroot.getDownloadURL();
       buyerProvider.imageURL = downloadurl;
 
@@ -58,7 +63,7 @@ class StoreProfileProvider with ChangeNotifier {
           'price': price,
           'stock': stock,
           'discreption': description,
-          'userid': userId!.uid,
+          'userid': userid,
           'createAt': DateTime.now(),
         },
       ).then((value) {
@@ -69,7 +74,7 @@ class StoreProfileProvider with ChangeNotifier {
         _priceController.clear();
         _stuckController.clear();
         _discriptionController.clear();
-        buyerProvider.imageFile = '';
+        buyerProvider.imageFile = null;
         buyerProvider.imageURL = '';
       });
     } catch (e) {
@@ -95,7 +100,7 @@ class StoreProfileProvider with ChangeNotifier {
     double price,
     int stock,
     String descreiption,
-    File imageFile,
+    File? imageFile,
     String productId,
   ) async {
     final buyerProvider = Provider.of<BuyerProvider>(context, listen: false);
@@ -104,12 +109,16 @@ class StoreProfileProvider with ChangeNotifier {
       String uniqueName = DateTime.now().millisecondsSinceEpoch.toString();
       Reference refroot =
           FirebaseStorage.instance.ref().child('image').child(uniqueName);
-      await refroot.putFile(File(imageFile.path));
+      await refroot.putFile(File(imageFile!.path));
       String downloadurl = await refroot.getDownloadURL();
       buyerProvider.imageURL = downloadurl;
 
       if (buyerProvider.imageURL.isEmpty) {
         flutterToast('Image upload failed. Please try again.');
+        return;
+      }
+      if (imageFile.path.isEmpty) {
+        flutterToast('Please select image');
         return;
       }
       await FirebaseFirestore.instance
@@ -133,7 +142,9 @@ class StoreProfileProvider with ChangeNotifier {
         buyerProvider.imageFile = null;
         buyerProvider.imageURL = '';
       });
-    } catch (e) {}
+    } catch (e) {
+      flutterToast('failed $e');
+    }
     notifyListeners();
   }
 }

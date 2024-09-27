@@ -28,6 +28,7 @@ class CustomCurt extends StatelessWidget {
             Navigator.push(context, MaterialPageRoute(builder: (contex) {
               return const CartScreen();
             }));
+            vm.updateTotalPrice();
           },
         );
       },

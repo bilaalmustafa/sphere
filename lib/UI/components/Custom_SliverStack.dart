@@ -138,7 +138,7 @@ class CustomSliverStack extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     CustomText(
@@ -159,7 +159,12 @@ class CustomSliverStack extends StatelessWidget {
                                         bold: FontWeight.normal,
                                         textcolor: ConstColors.primarycolor),
                                     const Spacer(),
-                                    const CustonRatingWidget(),
+                                    SizedBox(
+                                      width: 65,
+                                      child: CustonRatingWidget(
+                                        rating: data['rating'],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -180,7 +185,9 @@ class CustomSliverStack extends StatelessWidget {
                             image: DecorationImage(
                                 image: NetworkImage(condition == 'StoresScreen'
                                     ? image
-                                    : data['image']),
+                                    : data['image'] == ''
+                                        ? ''
+                                        : data['image']),
                                 fit: BoxFit.fill),
                             border: Border.all(
                                 color: ConstColors.primarycolor, width: 5),

@@ -10,12 +10,15 @@ import 'package:sphere/UI/screens/Cart_Screen/Cart_Provider.dart';
 import 'package:sphere/UI/screens/CheckOut_Screen/Check_out_Provider.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
-import 'package:sphere/core/constants/Flutertoast.dart';
-import 'package:sphere/generated/assets.dart';
 
-class CheckOutScreen extends StatelessWidget {
+class CheckOutScreen extends StatefulWidget {
   const CheckOutScreen({super.key});
 
+  @override
+  State<CheckOutScreen> createState() => _CheckOutScreenState();
+}
+
+class _CheckOutScreenState extends State<CheckOutScreen> {
   @override
   Widget build(BuildContext context) {
     User? userId = FirebaseAuth.instance.currentUser;
@@ -277,6 +280,9 @@ class CheckOutScreen extends StatelessWidget {
                   onTop: () async {
                     checkoutProvider.CheckOut(data, context, Datetime);
                     checkoutProvider.increamentId();
+                    checkoutProvider.showDialogBox(
+                        context, cartProvider.cart[0].brandId);
+                    checkoutProvider.getrating(cartProvider.cart[0].brandId);
                   }),
             ),
           );

@@ -14,6 +14,7 @@ import 'package:sphere/core/constants/Const_Colors.dart';
 import 'Const_Heading.dart';
 
 void showbottomsheet(
+    String userid,
     BuildContext context,
     String update,
     String title,
@@ -90,7 +91,8 @@ void showbottomsheet(
                     );
                   })),
                 ),
-                CustomTextField(title: 'Title', controller: titLecontroller),
+                CustomTextField(
+                    length: 16, title: 'Title', controller: titLecontroller),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -157,6 +159,7 @@ void showbottomsheet(
 
                         if (update != 'update') {
                           storeProfileProvider.addproducts(
+                              userid,
                               titLecontroller.text.trim(),
                               doubledisprice!,
                               doubleprice!,

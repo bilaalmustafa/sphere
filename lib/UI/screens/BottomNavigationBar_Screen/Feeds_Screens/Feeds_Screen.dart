@@ -8,9 +8,12 @@ import 'package:sphere/UI/components/Custom_Text.dart';
 import 'package:sphere/UI/components/Custom_WishList.dart';
 import 'package:sphere/UI/components/Shimmer/Shimmerfeeds.dart';
 import 'package:sphere/UI/components/custom_Curt.dart';
+import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Chats_Screens/Wishlist_Controller.dart';
+import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Chats_Screens/Wishlist_Screen.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Feeds_Screens/Feeds_Controller.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
+import 'package:sphere/models/cartModel.dart';
 
 class FeedsScreen extends StatelessWidget {
   const FeedsScreen({super.key});
@@ -19,6 +22,8 @@ class FeedsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final feedScreenProvider =
         Provider.of<FeedScreenProvider>(context, listen: false);
+    final wishlistProvider =
+        Provider.of<WishlistProvider>(context, listen: false);
     return Scaffold(
         drawer: const CustomDrawer(),
         backgroundColor: ConstColors.primarycolor,
@@ -126,23 +131,50 @@ class FeedsScreen extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          CustomWishList(
-                                            boderSide: Border.all(
-                                                color: ConstColors.blackColor),
-                                            icon:
-                                                Icons.favorite_border_outlined,
-                                            color: ConstColors.blackColor,
-                                            bgColor: ConstColors.primarycolor
-                                                .withOpacity(.5),
+                                          InkWell(
+                                            onTap: () {
+                                              wishlistProvider.addToCart(Cart(
+                                                  brandId: data['userid'],
+                                                  image: data['image'],
+                                                  shopname: data['brandname'],
+                                                  itemname: data['productname'],
+                                                  price: data['discountprice'],
+                                                  size: 'S',
+                                                  qty: 1));
+                                            },
+                                            child: CustomWishList(
+                                              boderSide: Border.all(
+                                                  color:
+                                                      ConstColors.blackColor),
+                                              icon: wishlistProvider.wishlist
+                                                      .contains(Cart(
+                                                          brandId:
+                                                              data['userid'],
+                                                          image: data['image'],
+                                                          shopname:
+                                                              data['brandname'],
+                                                          itemname: data[
+                                                              'productname'],
+                                                          price: data[
+                                                              'discountprice'],
+                                                          size: 'S',
+                                                          qty: 1))
+                                                  ? Icons.favorite
+                                                  : Icons
+                                                      .favorite_border_outlined,
+                                              color: ConstColors.blackColor,
+                                              bgColor: ConstColors.primarycolor
+                                                  .withOpacity(.5),
+                                            ),
                                           ),
-                                          CustomWishList(
-                                            boderSide: Border.all(
-                                                color: ConstColors.blackColor),
-                                            icon: Icons.share,
-                                            color: ConstColors.blackColor,
-                                            bgColor: ConstColors.primarycolor
-                                                .withOpacity(.5),
-                                          ),
+                                          // CustomWishList(
+                                          //   boderSide: Border.all(
+                                          //       color: ConstColors.blackColor),
+                                          //   icon: Icons.share,
+                                          //   color: ConstColors.blackColor,
+                                          //   bgColor: ConstColors.primarycolor
+                                          //       .withOpacity(.5),
+                                          // ),
                                         ],
                                       )
                                     ],
@@ -178,7 +210,12 @@ class FeedsScreen extends StatelessWidget {
                                           bold: FontWeight.bold,
                                           textcolor:
                                               ConstColors.seconderyColor),
-                                      const ShopNowButton(),
+                                      ShopNowButton(
+                                        onTop: () {
+                                          feedScreenProvider.visitStore(
+                                              context, data['userid']);
+                                        },
+                                      ),
                                     ],
                                   ),
                                 ),

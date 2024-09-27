@@ -6,22 +6,27 @@ import 'package:sphere/core/constants/Const_text.dart';
 class ShopNowButton extends StatelessWidget {
   const ShopNowButton({
     super.key,
+    required this.onTop,
   });
-
+  final VoidCallback onTop;
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: 30,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: ConstColors.seconderyColor.withOpacity(.7),
-          border: Border.all(color: ConstColors.seconderyColor),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: CustomText(
-            titletext: shopNow,
-            fontsize: 12,
-            bold: FontWeight.bold,
-            textcolor: ConstColors.primarycolor));
+    Size size = MediaQuery.of(context).size;
+    return InkWell(
+      onTap: onTop,
+      child: Container(
+          height: size.height * 0.035,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: ConstColors.seconderyColor.withOpacity(.7),
+            border: Border.all(color: ConstColors.seconderyColor),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: CustomText(
+              titletext: shopNow,
+              fontsize: 10,
+              bold: FontWeight.bold,
+              textcolor: ConstColors.primarycolor)),
+    );
   }
 }

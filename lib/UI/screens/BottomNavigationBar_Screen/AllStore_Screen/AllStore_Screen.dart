@@ -153,7 +153,9 @@ class _AllStoreScreenState extends State<AllStoreScreen> {
                                           NetworkImage(doc['image']),
                                     ),
                                   ),
-                                  const CustonRatingWidget(),
+                                  CustonRatingWidget(
+                                    rating: doc['rating'],
+                                  ),
                                   CustomText(
                                       titletext: doc['brand'],
                                       fontsize: smallText,

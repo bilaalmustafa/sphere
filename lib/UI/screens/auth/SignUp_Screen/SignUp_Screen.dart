@@ -69,7 +69,6 @@ class SignUpScreen extends StatelessWidget {
                       signUpControllerProvider.emailController.text.trim();
                   var userpassword =
                       signUpControllerProvider.passwordController.text.trim();
-
                   signUpControllerProvider.signup(username, useremail,
                       userpassword, signUpControllerProvider, context);
                 },

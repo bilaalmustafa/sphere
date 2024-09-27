@@ -19,13 +19,11 @@ class SignUpControllerPrivoder with ChangeNotifier {
   Future<void> signup(String username, String useremail, String userpassword,
       signupprovider, BuildContext context) async {
     if (useremail.isEmpty || userpassword.isEmpty) {
-      flutterToast("Please fill in all fields!");
-      return;
+      return flutterToast("Please fill in all fields!");
     }
 
     if (userpassword.length < 6) {
-      flutterToast('Password must be at least 6 characters long');
-      return;
+      return flutterToast('Password must be at least 6 characters long');
     }
 
     try {
@@ -46,7 +44,9 @@ class SignUpControllerPrivoder with ChangeNotifier {
           'address': '',
           'phoneno': '',
           'description': '',
-          'role': '',
+          'role': 'buyer',
+          'rating': 0,
+          'rators': 0,
           'createAt': DateTime.now(),
         });
 

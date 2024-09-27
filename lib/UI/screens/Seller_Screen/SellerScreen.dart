@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sphere/UI/components/Custom_Button.dart';
@@ -22,6 +23,7 @@ class _SellerScreenState extends State<SellerScreen> {
   Widget build(BuildContext context) {
     final sellerProvider = Provider.of<SellerProvider>(context, listen: false);
     final buyerProvider = Provider.of<BuyerProvider>(context, listen: false);
+    User? userId = FirebaseAuth.instance.currentUser;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: ConstColors.primarycolor,
@@ -69,6 +71,7 @@ class _SellerScreenState extends State<SellerScreen> {
                   controller: sellerProvider.brandnameContoller,
                   title: 'Brand name'),
               CustomTextField(
+                  length: 250,
                   controller: sellerProvider.descriptionContoller,
                   title: 'Discreption'),
               SizedBox(
@@ -78,14 +81,14 @@ class _SellerScreenState extends State<SellerScreen> {
                   buttontext: 'Confirm',
                   buttoncolor: ConstColors.seconderyColor,
                   btntextcolor: ConstColors.primarycolor,
-                  onTop: () {
+                  onTop: () async {
                     var brandname =
                         sellerProvider.brandnameContoller.text.trim();
                     var description =
                         sellerProvider.descriptionContoller.text.trim();
 
-                    sellerProvider.sellerRole(brandname, description, context,
-                        buyerProvider.imageFile!);
+                    await sellerProvider.sellerRole(userId!.uid, brandname,
+                        description, context, buyerProvider.imageFile!);
                   })
             ],
           ),

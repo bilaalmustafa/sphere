@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sphere/UI/components/Custom_Button.dart';
@@ -19,6 +20,10 @@ class CartScreen extends StatefulWidget {
 
 class _MyWidgetState extends State<CartScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
 

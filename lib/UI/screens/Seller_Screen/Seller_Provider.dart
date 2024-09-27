@@ -15,39 +15,32 @@ class SellerProvider with ChangeNotifier {
   TextEditingController get brandnameContoller => _brandnameContoller;
   TextEditingController get descriptionContoller => _descriptionContoller;
 
-  Future<void> sellerRole(String brandname, String description,
-      BuildContext context, File imageFile) async {
-    User? userId = FirebaseAuth.instance.currentUser;
+  Future<void> sellerRole(String userid, String brandname, String description,
+      BuildContext context, File? imageFile) async {
     final buyerProvider = Provider.of<BuyerProvider>(context, listen: false);
 
     if (brandname.isEmpty || description.isEmpty) {
-      flutterToast("Please fill in all fields!");
-      return;
+      return flutterToast("Please fill in all fields!");
     }
-
+    if (buyerProvider.imageFile == null) {
+      return flutterToast("Please select image");
+    }
     try {
       String uniqueName = DateTime.now().millisecondsSinceEpoch.toString();
       Reference refroot =
           FirebaseStorage.instance.ref().child('image').child(uniqueName);
-      await refroot.putFile(File(imageFile.path));
+      await refroot.putFile(File(imageFile!.path));
       String downloadurl = await refroot.getDownloadURL();
       buyerProvider.imageURL = downloadurl;
 
-      if (buyerProvider.imageURL.isEmpty) {
-        flutterToast('Image upload failed. Please try again.');
-        return;
-      }
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId!.uid)
-          .update({
+      await FirebaseFirestore.instance.collection('users').doc(userid).update({
         'image': buyerProvider.imageURL,
         'brand': brandname,
         'description': description,
         'role': 'seller',
         'createAt': DateTime.now(),
       });
-
+      buyerProvider.imageFile = null;
       Navigator.pushNamed(context, '/LoginScreen');
 
       flutterToast('Profile create successful');

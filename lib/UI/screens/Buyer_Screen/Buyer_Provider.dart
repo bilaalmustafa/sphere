@@ -29,17 +29,19 @@ class BuyerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> buyerRole(String phoneNo, String address, BuildContext context,
-      File imageFile) async {
-    User? userId = FirebaseAuth.instance.currentUser;
-
-    if (userId == null) {
+  Future<void> buyerRole(String userid, String phoneNo, String address,
+      BuildContext context, File imageFile) async {
+    if (userid == null) {
       flutterToast("User is not logged in!");
       return;
     }
 
     if (phoneNo.isEmpty || address.isEmpty) {
       flutterToast("Please fill in all fields!");
+      return;
+    }
+    if (imageFile!.path.isEmpty) {
+      flutterToast("Please select image");
       return;
     }
 
@@ -55,19 +57,15 @@ class BuyerProvider extends ChangeNotifier {
         flutterToast('Image upload failed. Please try again.');
         return;
       }
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId.uid)
-          .update({
+      await FirebaseFirestore.instance.collection('users').doc(userid).update({
         'image': _imageURL,
         'address': address,
         'phoneno': phoneNo,
         'role': 'buyer',
         'createAt': DateTime.now(),
       });
-
+      _imageFile = null;
       Navigator.pushNamed(context, '/LoginScreen');
-      // imageFile = null;
 
       flutterToast('Profile create successfully.');
     } catch (e) {

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,7 @@ class StoreProfileScreen extends StatelessWidget {
     String price = storeProfileProvider.priceController.text.trim();
     String stock = storeProfileProvider.stuckController.text.trim();
     String description = storeProfileProvider.discriptionController.text.trim();
+    User? userId = FirebaseAuth.instance.currentUser;
 
     double doubledisprice = double.tryParse(disprice) ?? 0.0;
     double doubleprice = double.tryParse(price) ?? 0.0;
@@ -37,8 +39,8 @@ class StoreProfileScreen extends StatelessWidget {
             size: size,
             condition: 'StoreProfileScreen',
             onTap: () {
-              showbottomsheet(context, 'add', title, doubledisprice,
-                  doubleprice, intstock, description, '', '');
+              showbottomsheet(userId!.uid, context, 'add', title,
+                  doubledisprice, doubleprice, intstock, description, '', '');
               print('showed');
             },
           )
@@ -47,8 +49,8 @@ class StoreProfileScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: ConstColors.primarycolor,
         onPressed: () {
-          showbottomsheet(context, 'add', title, doubledisprice, doubleprice,
-              intstock, description, '', '');
+          showbottomsheet(userId!.uid, context, 'add', title, doubledisprice,
+              doubleprice, intstock, description, '', '');
           print('showeddd');
         },
         child: Icon(

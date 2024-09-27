@@ -15,9 +15,8 @@ class UserProfile extends StatefulWidget {
   State<UserProfile> createState() => _UserProfileState();
 }
 
-User? userId = FirebaseAuth.instance.currentUser;
-
 class _UserProfileState extends State<UserProfile> {
+  User? userId = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

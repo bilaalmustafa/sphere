@@ -1,19 +1,22 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Stores_Screens/Stores_Screen.dart';
 import 'package:sphere/UI/screens/Products_DetialScreen/ProductDetailScreen.dart';
+import 'package:sphere/models/cartModel.dart';
 
 class FeedScreenProvider with ChangeNotifier {
   void navigator(final data, BuildContext context) {
     String userId = data['userid'] ?? '';
-    String image = data['image'] ?? ''; // Default to an empty string if null
-    String storename =
-        data['brandname'] ?? 'Unknown Brand'; // Provide a default brand name
-    double price = data['price'] ?? 0.0; // Default price
-    double disprice = data['discountprice'] ?? 0.0; // Default discount price
-    int stock = data['stock'] ?? 0; // Default stock
-    String productname =
-        data['productname'] ?? 'Unknown Product'; // Default product name
-    String description = data['discreption'] ??
-        'No description available'; // Default description
+    String image = data['image'] ?? '';
+    String storename = data['brandname'] ?? 'Unknown Brand';
+    double price = data['price'] ?? 0.0;
+    double disprice = data['discountprice'] ?? 0.0;
+    int stock = data['stock'] ?? 0;
+    String productname = data['productname'] ?? 'Unknown Product';
+    String description = data['discreption'] ?? 'No description available';
     print('navigatorrr');
 
     Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -30,5 +33,17 @@ class FeedScreenProvider with ChangeNotifier {
     }));
 
     notifyListeners();
+  }
+
+  visitStore(BuildContext context, String userid) async {
+    DocumentSnapshot snapshot =
+        await FirebaseFirestore.instance.collection('users').doc(userid).get();
+    Navigator.push(context, MaterialPageRoute(builder: (Context) {
+      return StoresScreen(
+          brandname: snapshot['brand'],
+          description: snapshot['description'],
+          uId: userid,
+          image: snapshot['image']);
+    }));
   }
 }

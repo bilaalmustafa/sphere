@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/AllStore_Screen/AllStore_Provider.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Bottom_ControllerProvider.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Bottom_Screen.dart';
+import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Chats_Screens/Wishlist_Controller.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Feeds_Screens/Feeds_Controller.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Profile_Screens/StoreProfile_Controller.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Stores_Screens/Stores_Provider.dart';
@@ -49,6 +50,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => StoreProvider()),
         ChangeNotifierProvider(create: (context) => FeedScreenProvider()),
         ChangeNotifierProvider(create: (context) => CheckOutProvider()),
+        ChangeNotifierProvider(create: (context) => StoreProvider()),
+        ChangeNotifierProvider(create: (context) => WishlistProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

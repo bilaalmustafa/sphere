@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sphere/UI/components/Custom_Button.dart';
@@ -19,6 +20,7 @@ class BuyerScreen extends StatefulWidget {
 class _BuyerScreenState extends State<BuyerScreen> {
   @override
   Widget build(BuildContext context) {
+    User? userId = FirebaseAuth.instance.currentUser;
     final buyerProvider = Provider.of<BuyerProvider>(context, listen: false);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -74,12 +76,12 @@ class _BuyerScreenState extends State<BuyerScreen> {
                 buttontext: 'Confirm',
                 buttoncolor: ConstColors.seconderyColor,
                 btntextcolor: ConstColors.primarycolor,
-                onTop: () {
+                onTop: () async {
                   var phoneNo = buyerProvider.phonenoController.text.trim();
                   var address = buyerProvider.addressController.text.trim();
 
-                  buyerProvider.buyerRole(
-                      phoneNo, address, context, buyerProvider.imageFile!);
+                  await buyerProvider.buyerRole(userId!.uid, phoneNo, address,
+                      context, buyerProvider.imageFile!);
                 },
               ),
             ],

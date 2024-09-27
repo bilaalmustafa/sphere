@@ -9,7 +9,7 @@ class CartProvider with ChangeNotifier {
   List<Cart> get cart => _cart;
   double _totalPrice = 0.0;
   double get totalPrice => _totalPrice;
-
+  String? _currentUseremail;
   late SharedPreferences prefs;
 
   CartProvider() {
@@ -19,7 +19,7 @@ class CartProvider with ChangeNotifier {
   Future<void> _loadCartFromPreferences() async {
     print('getinggg');
     prefs = await SharedPreferences.getInstance();
-    List<String>? cartJson = prefs.getStringList('cart');
+    List<String>? cartJson = prefs.getStringList('cart$_currentUseremail');
     if (cartJson != null) {
       _cart = cartJson.map((item) => Cart.fromJson(json.decode(item))).toList();
       print('savinggg ${cartJson}');
@@ -27,12 +27,17 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void setUserId(String email) {
+    _currentUseremail = email;
+    _loadCartFromPreferences();
+  }
+
   Future<void> _saveCartToPreferences() async {
     print('savinggg');
     prefs = await SharedPreferences.getInstance();
     List<String> cartJson =
         _cart.map((item) => jsonEncode(item.toJson())).toList();
-    await prefs.setStringList('cart', cartJson);
+    await prefs.setStringList('cart$_currentUseremail', cartJson);
     print('savinggg ${cartJson}');
     notifyListeners();
   }
@@ -41,21 +46,21 @@ class CartProvider with ChangeNotifier {
     print('addinggg');
     _cart.add(item);
     _saveCartToPreferences();
-    _updateTotalPrice();
+    updateTotalPrice();
     notifyListeners();
   }
 
   void removeFromCart(int index) {
     _cart.removeAt(index);
     _saveCartToPreferences();
-    _updateTotalPrice();
+    updateTotalPrice();
     notifyListeners();
   }
 
   void incrementQuantity(int index) {
     _cart[index].qty++;
     _saveCartToPreferences();
-    _updateTotalPrice();
+    updateTotalPrice();
     notifyListeners();
   }
 
@@ -63,12 +68,12 @@ class CartProvider with ChangeNotifier {
     if (_cart[index].qty > 1) {
       _cart[index].qty--;
       _saveCartToPreferences();
-      _updateTotalPrice();
+      updateTotalPrice();
       notifyListeners();
     }
   }
 
-  void _updateTotalPrice() {
+  void updateTotalPrice() {
     _totalPrice = _cart.fold(0, (sum, item) => sum + (item.price * item.qty));
     notifyListeners();
   }

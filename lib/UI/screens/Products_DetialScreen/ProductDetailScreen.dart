@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sphere/UI/components/CustomAppbarText.dart';
@@ -98,7 +99,7 @@ class _ProductDerailScreenState extends State<ProductDerailScreen> {
                       bold: FontWeight.w500,
                       textcolor: ConstColors.customGrey,
                     ),
-                    const CustonRatingWidget(),
+                    // const CustonRatingWidget(),
                   ],
                 ),
               ),
@@ -201,19 +202,24 @@ class _ProductDerailScreenState extends State<ProductDerailScreen> {
                         const Spacer(),
                         Container(
                           height: 20,
-                          width: 70,
+                          width: 75,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            color: ConstColors.seconderyColor.withOpacity(0.1),
+                            color: widget.stock >= 1
+                                ? ConstColors.seconderyColor.withOpacity(0.1)
+                                : ConstColors.CustomRed.withOpacity(0.1),
                             border:
                                 Border.all(color: ConstColors.seconderyColor),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: CustomText(
-                            titletext: 'in Stock',
+                            titletext:
+                                widget.stock >= 1 ? 'in Stock' : 'out Stock',
                             fontsize: smallText,
                             bold: FontWeight.w500,
-                            textcolor: ConstColors.seconderyColor,
+                            textcolor: widget.stock >= 1
+                                ? ConstColors.seconderyColor
+                                : ConstColors.CustomRed,
                           ),
                         ),
                       ],
@@ -254,19 +260,23 @@ class _ProductDerailScreenState extends State<ProductDerailScreen> {
                 onTop: () {
                   print(widget.storename);
 
-                  if (cartProvider.cart.isEmpty ||
-                      cartProvider.cart[0].shopname == widget.storename) {
-                    cartProvider.addToCart(Cart(
-                        brandId: widget.brandId,
-                        image: widget.image,
-                        shopname: widget.storename,
-                        itemname: widget.productname,
-                        price: widget.price,
-                        size: sizes,
-                        qty: 1));
-                    print(cartProvider.cart[0].shopname);
+                  if (widget.stock != 0) {
+                    if (cartProvider.cart.isEmpty ||
+                        cartProvider.cart[0].shopname == widget.storename) {
+                      cartProvider.addToCart(Cart(
+                          brandId: widget.brandId,
+                          image: widget.image,
+                          shopname: widget.storename,
+                          itemname: widget.productname,
+                          price: widget.price,
+                          size: sizes,
+                          qty: 1));
+                      print(cartProvider.cart[0].shopname);
+                    } else {
+                      flutterToast("You can't add from difference store");
+                    }
                   } else {
-                    flutterToast("You can't add from difference store");
+                    flutterToast('out of stuck');
                   }
 
                   Navigator.pop(context);

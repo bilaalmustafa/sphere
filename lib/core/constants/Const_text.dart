@@ -11,6 +11,6 @@ const String confirmpassword = 'Confirm Password';
 const String forgetpassword = ' Forget Password';
 const String logIn = 'Log In';
 const String signUp = 'Sign Up';
-const String shopNow = 'SHOP NOW';
+const String shopNow = 'VISIT NOW';
 const String Buyer = 'Buyer';
 const String Seller = 'Seller';
