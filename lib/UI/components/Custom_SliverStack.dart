@@ -21,11 +21,13 @@ class CustomSliverStack extends StatelessWidget {
     this.brandname,
     this.description,
     this.image,
+    this.rating,
   });
   final String condition;
   final Size size;
   final Color? shadowclr;
   final String? brandname, description, image;
+  final int? rating;
 
   @override
   Widget build(BuildContext context) {
@@ -51,38 +53,38 @@ class CustomSliverStack extends StatelessWidget {
                   onSelected: (item) {},
                   itemBuilder: (context) {
                     return [
-                      PopupMenuItem(
-                          value: 1,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Icon(
-                                Icons.edit,
-                                color: ConstColors.seconderyColor,
-                              ),
-                              CustomText(
-                                  titletext: 'Edit',
-                                  fontsize: normalText,
-                                  bold: FontWeight.w500,
-                                  textcolor: ConstColors.blackColor)
-                            ],
-                          )),
-                      PopupMenuItem(
-                          value: 1,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Icon(
-                                Icons.branding_watermark,
-                                color: ConstColors.seconderyColor,
-                              ),
-                              CustomText(
-                                  titletext: 'Ads',
-                                  fontsize: normalText,
-                                  bold: FontWeight.w500,
-                                  textcolor: ConstColors.blackColor)
-                            ],
-                          )),
+                      // PopupMenuItem(
+                      //     value: 1,
+                      //     child: Row(
+                      //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      //       children: [
+                      //         Icon(
+                      //           Icons.edit,
+                      //           color: ConstColors.seconderyColor,
+                      //         ),
+                      //         CustomText(
+                      //             titletext: 'Edit',
+                      //             fontsize: normalText,
+                      //             bold: FontWeight.w500,
+                      //             textcolor: ConstColors.blackColor)
+                      //       ],
+                      //     )),
+                      // PopupMenuItem(
+                      //     value: 1,
+                      //     child: Row(
+                      //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      //       children: [
+                      //         Icon(
+                      //           Icons.branding_watermark,
+                      //           color: ConstColors.seconderyColor,
+                      //         ),
+                      //         CustomText(
+                      //             titletext: 'Ads',
+                      //             fontsize: normalText,
+                      //             bold: FontWeight.w500,
+                      //             textcolor: ConstColors.blackColor)
+                      //       ],
+                      //     )),
                     ];
                   },
                   child: Icon(
@@ -162,7 +164,9 @@ class CustomSliverStack extends StatelessWidget {
                                     SizedBox(
                                       width: 65,
                                       child: CustonRatingWidget(
-                                        rating: data['rating'],
+                                        rating: condition == 'StoresScreen'
+                                            ? rating
+                                            : data['rating'],
                                       ),
                                     ),
                                   ],

@@ -115,22 +115,23 @@ class _AllStoreScreenState extends State<AllStoreScreen> {
                         itemBuilder: (context, index) {
                           final doc = snapshot.data!.docs[index];
 
-                          return InkWell(
-                            onTap: () {
-                              allStoreProvider.onChange(index);
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return StoresScreen(
-                                  uId: doc['userId'],
-                                  brandname: doc['brand'],
-                                  description: doc['description'],
-                                  image: doc['image'],
-                                );
-                              }));
-                            },
-                            child: Container(
+                          return InkWell(onTap: () {
+                            allStoreProvider.onChange(index);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return StoresScreen(
+                                uId: doc['userId'],
+                                brandname: doc['brand'],
+                                description: doc['description'],
+                                image: doc['image'],
+                                rating: doc['rating'],
+                              );
+                            }));
+                          }, child: Consumer<AllSToreProvider>(
+                              builder: (context, vm, child) {
+                            return Container(
                               alignment: Alignment.center,
-                              color: allStoreProvider.seleted == index
+                              color: vm.seleted == index
                                   ? ConstColors.seconderyColor.withOpacity(0.1)
                                   : ConstColors.primarycolor,
                               child: Column(
@@ -164,8 +165,8 @@ class _AllStoreScreenState extends State<AllStoreScreen> {
                                           .withOpacity(0.5))
                                 ],
                               ),
-                            ),
-                          );
+                            );
+                          }));
                         });
                   })
             ],

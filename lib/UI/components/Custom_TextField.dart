@@ -9,10 +9,16 @@ class CustomTextField extends StatelessWidget {
       required this.title,
       this.icon,
       required this.controller,
-      this.length});
+      this.length,
+      this.onChange,
+      required this.obscure,
+      this.onTap});
   final String title;
   final IconData? icon;
   final TextEditingController controller;
+  final ValueChanged? onChange;
+  final bool obscure;
+  final VoidCallback? onTap;
   int? length;
 
   @override
@@ -23,6 +29,9 @@ class CustomTextField extends StatelessWidget {
         bottom: 10,
       ),
       child: TextField(
+        obscureText: obscure,
+
+        onChanged: onChange,
         // keyboardType: TextInputType.,
         inputFormatters: [LengthLimitingTextInputFormatter(length)],
         controller: controller,
@@ -31,9 +40,12 @@ class CustomTextField extends StatelessWidget {
           fillColor: ConstColors.thirdColor,
           enabled: true,
           filled: true,
-          suffixIcon: Icon(
-            icon,
-            color: ConstColors.seconderyColor,
+          suffixIcon: InkWell(
+            onTap: onTap,
+            child: Icon(
+              icon,
+              color: ConstColors.seconderyColor,
+            ),
           ),
           focusColor: Colors.red,
           border: OutlineInputBorder(

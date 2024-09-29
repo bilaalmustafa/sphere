@@ -140,8 +140,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                         const SizedBox(
                           width: 30,
                         ),
-                        Expanded(
-                          flex: 2,
+                        Flexible(
+                          flex: 4,
                           child: CustomText(
                               titletext: data['address'],
                               fontsize: smallText,
@@ -208,7 +208,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             bold: FontWeight.bold,
                             textcolor: ConstColors.blackColor),
                         CustomText(
-                            titletext: '\$ ${cartProvider.totalPrice}',
+                            titletext:
+                                '\$ ${cartProvider.totalPrice.toStringAsFixed(2)}',
                             fontsize: smallText,
                             bold: FontWeight.bold,
                             textcolor: ConstColors.blackColor),
@@ -280,9 +281,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   onTop: () async {
                     checkoutProvider.CheckOut(data, context, Datetime);
                     checkoutProvider.increamentId();
-                    checkoutProvider.showDialogBox(
-                        context, cartProvider.cart[0].brandId);
-                    checkoutProvider.getrating(cartProvider.cart[0].brandId);
                   }),
             ),
           );

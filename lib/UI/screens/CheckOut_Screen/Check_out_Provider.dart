@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sphere/UI/screens/Cart_Screen/Cart_Provider.dart';
+import 'package:sphere/UI/screens/Congrate_Screen.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Flutertoast.dart';
 
@@ -18,7 +19,13 @@ class CheckOutProvider with ChangeNotifier {
   int get totalrating => _totalrating;
   int get rators => _rators;
 
-  void getrating(String userid) async {
+  Future<void> getOrderID(String userid) async {
+    DocumentSnapshot snapshot =
+        await FirebaseFirestore.instance.collection('order').doc(userid).get();
+    _orderId = snapshot['orderId'];
+  }
+
+  Future<void> getrating(String userid) async {
     DocumentSnapshot snapshot =
         await FirebaseFirestore.instance.collection('users').doc(userid).get();
     _rators = snapshot['rators'];
@@ -51,6 +58,9 @@ class CheckOutProvider with ChangeNotifier {
     try {
       List<Map<String, dynamic>> itemlist =
           cartProvider.cart.map((item) => item.toJson()).toList();
+      if (ConnectionState == ConnectionState.none) {
+        return flutterToast('Disconnection');
+      }
 
       await FirebaseFirestore.instance.collection('orders').doc().set({
         'userid': cartProvider.cart[0].brandId,
@@ -62,9 +72,17 @@ class CheckOutProvider with ChangeNotifier {
         'total': cartProvider.totalPrice,
         'orderId': ordetId,
         'itemlist': itemlist
-      }).then((value) {
+      }).then((value) async {
+        await getrating(cartProvider.cart[0].brandId);
+
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return const CongrateScreen();
+        }));
+
+        showDialogBox(context, cartProvider.cart[0].brandId);
         cartProvider.cart.clear();
-        Navigator.pushReplacementNamed(context, '/NavigationBottomScreen');
+        cartProvider.saveCartToPreferences();
       });
     } catch (e) {
       flutterToast('failed: $e');
@@ -72,7 +90,7 @@ class CheckOutProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  showDialogBox(BuildContext context, String userid) {
+  Future<void> showDialogBox(BuildContext context, String userid) {
     return showDialog(
       context: context,
       builder: (context) {

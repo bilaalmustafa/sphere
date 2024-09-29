@@ -222,7 +222,7 @@ class _MyWidgetState extends State<CartScreen> {
                       textcolor: ConstColors.seconderyColor),
                   Consumer<CartProvider>(builder: (context, vm, child) {
                     return CustomText(
-                        titletext: '\$ ${vm.totalPrice.toString()}',
+                        titletext: '\$ ${vm.totalPrice.toStringAsFixed(2)}',
                         fontsize: Heading2,
                         bold: FontWeight.bold,
                         textcolor: ConstColors.seconderyColor);

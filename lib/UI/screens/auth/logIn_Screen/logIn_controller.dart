@@ -10,6 +10,14 @@ class LogInControllerPrivoder with ChangeNotifier {
   TextEditingController _loginemailController = TextEditingController();
   TextEditingController _loginpasswordController = TextEditingController();
 
+  bool _isobsecure = true;
+  bool get isobsecure => _isobsecure;
+
+  void onTap() {
+    _isobsecure = !_isobsecure;
+    notifyListeners();
+  }
+
   TextEditingController get loginemailController => _loginemailController;
   TextEditingController get loginpasswordController => _loginpasswordController;
 
@@ -27,6 +35,9 @@ class LogInControllerPrivoder with ChangeNotifier {
     if (password.length < 6) {
       return flutterToast('Password must be at least 6 characters long');
     }
+    if (ConnectionState == ConnectionState.none) {
+      return flutterToast('Disconnection');
+    }
 
     try {
       await FirebaseAuth.instance
@@ -35,13 +46,14 @@ class LogInControllerPrivoder with ChangeNotifier {
         await buttomNavigationBar.fetchUserRole();
         cartProvider.setUserId(email);
         wishlistProvider.setUserId(email);
+        buttomNavigationBar.setEmail(email);
 
         flutterToast('Log in successful');
         Navigator.pushReplacementNamed(context, '/NavigationBottomScreen');
       });
     } catch (e) {
       print(e);
-      flutterToast('Incorrect email or password:');
+      flutterToast('Disconnection');
     }
     notifyListeners();
   }

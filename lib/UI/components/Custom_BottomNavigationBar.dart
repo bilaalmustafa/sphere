@@ -15,7 +15,8 @@ class BottomNavigationBarScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bottomProvider = Provider.of<BottomControllerProvider>(context);
+    final bottomProvider =
+        Provider.of<BottomControllerProvider>(context, listen: false);
     User? userId = FirebaseAuth.instance.currentUser;
 
     return StreamBuilder<DocumentSnapshot>(
@@ -25,7 +26,11 @@ class BottomNavigationBarScreen extends StatelessWidget {
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData || snapshot.data == null) {
-            return const ShimmerFeed();
+            return Center(
+              child: CircularProgressIndicator(
+                color: ConstColors.seconderyColor,
+              ),
+            );
           }
 
           return BottomBarInspiredOutside(
@@ -45,11 +50,11 @@ class BottomNavigationBarScreen extends StatelessWidget {
             },
             items: [
               const TabItem(
-                icon: CupertinoIcons.home,
+                icon: CupertinoIcons.collections,
                 title: 'Home',
               ),
               const TabItem(
-                icon: CupertinoIcons.shopping_cart,
+                icon: Icons.storefront,
                 title: 'Shop',
               ),
               // TabItem(

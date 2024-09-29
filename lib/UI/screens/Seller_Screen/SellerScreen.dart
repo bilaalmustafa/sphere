@@ -68,9 +68,12 @@ class _SellerScreenState extends State<SellerScreen> {
                 height: size.height * 0.06,
               ),
               CustomTextField(
+                  obscure: false,
+                  length: 16,
                   controller: sellerProvider.brandnameContoller,
                   title: 'Brand name'),
               CustomTextField(
+                  obscure: false,
                   length: 250,
                   controller: sellerProvider.descriptionContoller,
                   title: 'Discreption'),

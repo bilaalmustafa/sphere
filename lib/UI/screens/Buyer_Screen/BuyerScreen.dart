@@ -64,10 +64,12 @@ class _BuyerScreenState extends State<BuyerScreen> {
               ),
               SizedBox(height: size.height * 0.06),
               CustomTextField(
+                obscure: false,
                 controller: buyerProvider.phonenoController,
                 title: 'Phone no',
               ),
               CustomTextField(
+                obscure: false,
                 controller: buyerProvider.addressController,
                 title: 'Delivery address',
               ),

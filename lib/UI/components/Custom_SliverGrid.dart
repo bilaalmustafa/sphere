@@ -6,11 +6,14 @@ import 'package:sphere/UI/components/Custom_PopMenu_item.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
 import 'package:sphere/UI/components/Custom_WishList.dart';
 import 'package:sphere/UI/components/Shimmer/SlivergrideShimmer.dart';
+import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Chats_Screens/Wishlist_Controller.dart';
+import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Chats_Screens/Wishlist_Screen.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Feeds_Screens/Feeds_Controller.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Profile_Screens/StoreProfile_Controller.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
 import 'package:sphere/core/constants/showBottomSheet.dart';
+import 'package:sphere/models/cartModel.dart';
 
 class CustomSliverGrid extends StatelessWidget {
   CustomSliverGrid({
@@ -66,6 +69,14 @@ class CustomSliverGrid extends StatelessWidget {
               ),
               itemBuilder: (context, index) {
                 var data = snapshot.data!.docs[index];
+                var objItem = Cart(
+                    brandId: data['userid'],
+                    image: data['image'],
+                    shopname: data['brandname'],
+                    itemname: data['productname'],
+                    price: data['discountprice'],
+                    size: 'S',
+                    qty: 1);
 
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -110,72 +121,89 @@ class CustomSliverGrid extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: condition == 'StoreProfileScreen'
-                                            ? PopupMenuButton(
-                                                color: ConstColors.primarycolor,
-                                                onSelected: (int value) {
-                                                  if (value == 1) {
-                                                    showbottomsheet(
-                                                        userId!.uid,
-                                                        context,
-                                                        'update',
-                                                        data['productname']
-                                                            .toString(),
-                                                        data['discountprice'],
-                                                        data['price'],
-                                                        data['stock'],
-                                                        data['discreption']
-                                                            .toString(),
-                                                        data['image'],
-                                                        data.id);
-                                                  } else if (value == 2) {
-                                                    storeProfireProvider
-                                                        .deleteProduct(data.id);
-                                                  }
-                                                },
-                                                itemBuilder: (context) {
-                                                  return [
-                                                    PopupMenuItem(
-                                                        value: 1,
-                                                        child:
-                                                            CustomPopMenuItem(
-                                                          text: 'Edit',
-                                                          icon: Icons.edit,
-                                                          color: ConstColors
-                                                              .seconderyColor,
-                                                        )),
-                                                    PopupMenuItem(
-                                                        value: 2,
-                                                        child:
-                                                            CustomPopMenuItem(
-                                                          text: 'Delete',
-                                                          icon: Icons.delete,
-                                                          color: ConstColors
-                                                              .CustomRed,
-                                                        )),
-                                                  ];
-                                                },
-                                                child: CustomWishList(
-                                                  bgColor: ConstColors
-                                                      .primarycolor
-                                                      .withOpacity(.5),
-                                                  icon:
-                                                      Icons.more_vert_outlined,
-                                                  color: ConstColors
-                                                      .seconderyColor,
-                                                ),
-                                              )
-                                            : CustomWishList(
-                                                bgColor: ConstColors
-                                                    .primarycolor
-                                                    .withOpacity(.5),
-                                                icon: Icons
-                                                    .favorite_border_outlined,
-                                                color:
-                                                    ConstColors.seconderyColor,
-                                              )),
+                                    Consumer<WishlistProvider>(
+                                        builder: (context, vm, child) {
+                                      return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: condition ==
+                                                  'StoreProfileScreen'
+                                              ? PopupMenuButton(
+                                                  color:
+                                                      ConstColors.primarycolor,
+                                                  onSelected: (int value) {
+                                                    if (value == 1) {
+                                                      showbottomsheet(
+                                                          userId!.uid,
+                                                          context,
+                                                          'update',
+                                                          data['productname']
+                                                              .toString(),
+                                                          data['discountprice'],
+                                                          data['price'],
+                                                          data['stock'],
+                                                          data['discreption']
+                                                              .toString(),
+                                                          data['image'],
+                                                          data.id);
+                                                    } else if (value == 2) {
+                                                      storeProfireProvider
+                                                          .deleteProduct(
+                                                              data.id);
+                                                    }
+                                                  },
+                                                  itemBuilder: (context) {
+                                                    return [
+                                                      PopupMenuItem(
+                                                          value: 1,
+                                                          child:
+                                                              CustomPopMenuItem(
+                                                            text: 'Edit',
+                                                            icon: Icons.edit,
+                                                            color: ConstColors
+                                                                .seconderyColor,
+                                                          )),
+                                                      PopupMenuItem(
+                                                          value: 2,
+                                                          child:
+                                                              CustomPopMenuItem(
+                                                            text: 'Delete',
+                                                            icon: Icons.delete,
+                                                            color: ConstColors
+                                                                .CustomRed,
+                                                          )),
+                                                    ];
+                                                  },
+                                                  child: CustomWishList(
+                                                    bgColor: ConstColors
+                                                        .primarycolor
+                                                        .withOpacity(.5),
+                                                    icon: Icons
+                                                        .more_vert_outlined,
+                                                    color: ConstColors
+                                                        .seconderyColor,
+                                                  ),
+                                                )
+                                              : InkWell(
+                                                  onTap: () {
+                                                    vm.isInWishlist(objItem)
+                                                        ? vm.removeFromCart(
+                                                            objItem)
+                                                        : vm.addToCart(objItem);
+                                                  },
+                                                  child: CustomWishList(
+                                                    bgColor: ConstColors
+                                                        .primarycolor
+                                                        .withOpacity(.5),
+                                                    icon: vm.isInWishlist(
+                                                            objItem)
+                                                        ? Icons.favorite
+                                                        : Icons
+                                                            .favorite_border_outlined,
+                                                    color:
+                                                        ConstColors.CustomRed,
+                                                  ),
+                                                ));
+                                    })
                                   ],
                                 )),
                           ),

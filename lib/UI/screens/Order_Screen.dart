@@ -103,15 +103,23 @@ class OrderScreen extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 5,
                                 ),
-                                CircleAvatar(
-                                  backgroundColor: ConstColors.primarycolor,
-                                  radius: 15,
-                                  child: const Icon(
-                                    Icons.close,
-                                    color: Colors.red,
+                                InkWell(
+                                  onTap: () async {
+                                    FirebaseFirestore.instance
+                                        .collection('orders')
+                                        .doc(data.id)
+                                        .delete();
+                                  },
+                                  child: CircleAvatar(
+                                    backgroundColor: ConstColors.primarycolor,
+                                    radius: 15,
+                                    child: const Icon(
+                                      Icons.close,
+                                      color: Colors.red,
+                                    ),
                                   ),
                                 )
                               ],

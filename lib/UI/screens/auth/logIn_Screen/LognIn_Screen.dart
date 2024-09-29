@@ -43,14 +43,23 @@ class LoginScreen extends StatelessWidget {
                 width: size.width * 0.6,
               ),
               CustomTextField(
+                obscure: false,
                 controller: logInControllerProvider.loginemailController,
                 title: email,
               ),
-              CustomTextField(
-                controller: logInControllerProvider.loginpasswordController,
-                title: password,
-                icon: Icons.visibility_off_outlined,
-              ),
+              Consumer<LogInControllerPrivoder>(builder: (context, vm, child) {
+                return CustomTextField(
+                  onTap: () {
+                    vm.onTap();
+                  },
+                  obscure: vm.isobsecure,
+                  controller: vm.loginpasswordController,
+                  title: password,
+                  icon: vm.isobsecure == true
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
+                );
+              }),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

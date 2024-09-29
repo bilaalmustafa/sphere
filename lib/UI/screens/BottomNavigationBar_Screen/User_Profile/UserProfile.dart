@@ -30,7 +30,7 @@ class _UserProfileState extends State<UserProfile> {
         ),
         actions: [
           Icon(
-            Icons.favorite,
+            Icons.more_vert,
             color: ConstColors.seconderyColor,
           ),
           const SizedBox(

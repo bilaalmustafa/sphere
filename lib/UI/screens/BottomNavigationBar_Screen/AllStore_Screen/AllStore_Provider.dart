@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sphere/generated/assets.dart';
 
 class AllSToreProvider with ChangeNotifier {
   List<String> _imageList = [
-    'Assets/Images/image1.jpeg',
-    'Assets/Images/image2.jpeg'
+    ImagesAssets.firstImage,
+    ImagesAssets.thirdImage,
+    ImagesAssets.scondImage
   ];
 
   int _selected = 0;

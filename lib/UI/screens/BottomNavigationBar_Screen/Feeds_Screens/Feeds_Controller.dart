@@ -8,6 +8,17 @@ import 'package:sphere/UI/screens/Products_DetialScreen/ProductDetailScreen.dart
 import 'package:sphere/models/cartModel.dart';
 
 class FeedScreenProvider with ChangeNotifier {
+  TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
+  String get searchQuery => _searchQuery;
+
+  TextEditingController get searchController => _searchController;
+
+  onChange(value) {
+    _searchQuery = value.toLowerCase();
+    notifyListeners();
+  }
+
   void navigator(final data, BuildContext context) {
     String userId = data['userid'] ?? '';
     String image = data['image'] ?? '';
@@ -40,10 +51,12 @@ class FeedScreenProvider with ChangeNotifier {
         await FirebaseFirestore.instance.collection('users').doc(userid).get();
     Navigator.push(context, MaterialPageRoute(builder: (Context) {
       return StoresScreen(
-          brandname: snapshot['brand'],
-          description: snapshot['description'],
-          uId: userid,
-          image: snapshot['image']);
+        brandname: snapshot['brand'],
+        description: snapshot['description'],
+        uId: userid,
+        image: snapshot['image'],
+        rating: snapshot['rating'],
+      );
     }));
   }
 }

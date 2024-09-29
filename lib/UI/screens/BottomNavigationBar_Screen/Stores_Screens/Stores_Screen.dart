@@ -14,9 +14,11 @@ class StoresScreen extends StatelessWidget {
       required this.brandname,
       required this.description,
       required this.uId,
-      required this.image});
+      required this.image,
+      required this.rating});
   final String brandname, description, image;
   final String uId;
+  final int rating;
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +29,13 @@ class StoresScreen extends StatelessWidget {
         body: CustomScrollView(
           slivers: [
             CustomSliverStack(
-                size: size,
-                condition: 'StoresScreen',
-                brandname: brandname,
-                description: description,
-                image: image),
-            CustomSliverSearchBar(controller: storeProvider.searchController),
+              size: size,
+              condition: 'StoresScreen',
+              brandname: brandname,
+              description: description,
+              image: image,
+              rating: rating,
+            ),
 
             CustomSliverGrid(
               uId: uId,

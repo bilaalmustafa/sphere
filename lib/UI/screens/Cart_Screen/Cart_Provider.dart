@@ -27,12 +27,13 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setUserId(String email) {
+  Future<void> setUserId(String email) async {
     _currentUseremail = email;
     _loadCartFromPreferences();
+    print(' emaaaillll: $email');
   }
 
-  Future<void> _saveCartToPreferences() async {
+  Future<void> saveCartToPreferences() async {
     print('savinggg');
     prefs = await SharedPreferences.getInstance();
     List<String> cartJson =
@@ -45,21 +46,21 @@ class CartProvider with ChangeNotifier {
   void addToCart(Cart item) {
     print('addinggg');
     _cart.add(item);
-    _saveCartToPreferences();
+    saveCartToPreferences();
     updateTotalPrice();
     notifyListeners();
   }
 
   void removeFromCart(int index) {
     _cart.removeAt(index);
-    _saveCartToPreferences();
+    saveCartToPreferences();
     updateTotalPrice();
     notifyListeners();
   }
 
   void incrementQuantity(int index) {
     _cart[index].qty++;
-    _saveCartToPreferences();
+    saveCartToPreferences();
     updateTotalPrice();
     notifyListeners();
   }
@@ -67,7 +68,7 @@ class CartProvider with ChangeNotifier {
   void decrementQuantity(int index) {
     if (_cart[index].qty > 1) {
       _cart[index].qty--;
-      _saveCartToPreferences();
+      saveCartToPreferences();
       updateTotalPrice();
       notifyListeners();
     }

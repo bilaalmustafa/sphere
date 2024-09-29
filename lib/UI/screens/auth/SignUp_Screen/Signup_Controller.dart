@@ -17,13 +17,16 @@ class SignUpControllerPrivoder with ChangeNotifier {
       _confirmPasswordController;
 
   Future<void> signup(String username, String useremail, String userpassword,
-      signupprovider, BuildContext context) async {
+      String confirmpassword, BuildContext context) async {
     if (useremail.isEmpty || userpassword.isEmpty) {
       return flutterToast("Please fill in all fields!");
     }
 
     if (userpassword.length < 6) {
       return flutterToast('Password must be at least 6 characters long');
+    }
+    if (userpassword.toString() != confirmpassword.toString()) {
+      return flutterToast('Your password does not match');
     }
 
     try {

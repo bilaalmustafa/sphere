@@ -92,20 +92,26 @@ void showbottomsheet(
                   })),
                 ),
                 CustomTextField(
-                    length: 16, title: 'Title', controller: titLecontroller),
+                    obscure: false,
+                    length: 16,
+                    title: 'Title',
+                    controller: titLecontroller),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       width: 150,
                       child: CustomTextField(
+                          obscure: false,
                           title: 'Discount price',
                           controller: discountPricecontroller),
                     ),
                     Container(
                       width: 120,
                       child: CustomTextField(
-                          title: 'Price', controller: priceController),
+                          obscure: false,
+                          title: 'Price',
+                          controller: priceController),
                     ),
                   ],
                 ),
@@ -114,6 +120,7 @@ void showbottomsheet(
                     Container(
                       width: 150,
                       child: CustomTextField(
+                          obscure: false,
                           title: 'Availible stock',
                           controller: stockController),
                     ),

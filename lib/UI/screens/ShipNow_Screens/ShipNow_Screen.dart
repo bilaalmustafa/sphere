@@ -132,8 +132,8 @@ class ShipnowScren extends StatelessWidget {
                         bold: FontWeight.bold,
                         textcolor: ConstColors.blackColor),
                   ),
-                  Expanded(
-                    flex: 1,
+                  Flexible(
+                    flex: 4,
                     child: CustomText(
                         titletext: address,
                         fontsize: smallText,
@@ -202,7 +202,7 @@ class ShipnowScren extends StatelessWidget {
                       bold: FontWeight.bold,
                       textcolor: ConstColors.blackColor),
                   CustomText(
-                      titletext: '\$ ${total.toString()}',
+                      titletext: '\$ ${total.toStringAsFixed(2)}',
                       fontsize: smallText,
                       bold: FontWeight.bold,
                       textcolor: ConstColors.blackColor),
