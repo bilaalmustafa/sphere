@@ -6,7 +6,6 @@ import 'package:sphere/UI/components/Custom_Text.dart';
 import 'package:sphere/UI/screens/ShipNow_Screens/ShipNow_Screen.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
-import 'package:sphere/models/OrderItemModel.dart';
 
 class OrderScreen extends StatelessWidget {
   const OrderScreen({super.key});

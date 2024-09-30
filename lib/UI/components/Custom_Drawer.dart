@@ -2,12 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
-import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Bottom_ControllerProvider.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Chats_Screens/Wishlist_Controller.dart';
 import 'package:sphere/UI/screens/Cart_Screen/Cart_Provider.dart';
-import 'package:sphere/UI/screens/CheckOut_Screen/Check_out_Provider.dart';
 import 'package:sphere/UI/screens/Order_Screen.dart';
 import 'package:sphere/UI/screens/auth/logIn_Screen/logIn_controller.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
@@ -25,8 +22,6 @@ class CustomDrawer extends StatelessWidget {
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
     final wishlistprovider =
         Provider.of<WishlistProvider>(context, listen: false);
-    final buttomNavigationBar =
-        Provider.of<BottomControllerProvider>(context, listen: false);
 
     return Drawer(
         backgroundColor: ConstColors.primarycolor,

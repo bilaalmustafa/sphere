@@ -35,9 +35,6 @@ class LogInControllerPrivoder with ChangeNotifier {
     if (password.length < 6) {
       return flutterToast('Password must be at least 6 characters long');
     }
-    if (ConnectionState == ConnectionState.none) {
-      return flutterToast('Disconnection');
-    }
 
     try {
       await FirebaseAuth.instance
@@ -53,7 +50,7 @@ class LogInControllerPrivoder with ChangeNotifier {
       });
     } catch (e) {
       print(e);
-      flutterToast('Disconnection');
+      flutterToast('Failed: $e');
     }
     notifyListeners();
   }

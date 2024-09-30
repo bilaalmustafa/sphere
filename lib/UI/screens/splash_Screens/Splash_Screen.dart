@@ -1,10 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Bottom_ControllerProvider.dart';
-import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Bottom_Screen.dart';
+
 import 'package:sphere/UI/screens/CreateAccount_Screen/CreateAccount.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/generated/assets.dart';
@@ -24,8 +21,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> login() async {
-    final bottomProvider =
-        Provider.of<BottomControllerProvider>(context, listen: false);
     Timer(
       const Duration(seconds: 3),
       () {

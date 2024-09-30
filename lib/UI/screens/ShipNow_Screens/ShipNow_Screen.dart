@@ -1,16 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:sphere/UI/components/Custom_Button.dart';
 import 'package:sphere/UI/components/Custom_LeadingBack.dart';
 import 'package:sphere/UI/components/Custom_Text.dart';
-import 'package:sphere/UI/screens/Cart_Screen/Cart_Provider.dart';
-import 'package:sphere/UI/screens/CheckOut_Screen/Check_out_Provider.dart';
 import 'package:sphere/core/constants/Const_Colors.dart';
 import 'package:sphere/core/constants/Const_Heading.dart';
-import 'package:sphere/core/constants/Flutertoast.dart';
 import 'package:sphere/models/OrderItemModel.dart';
 
 class ShipnowScren extends StatelessWidget {
@@ -30,10 +23,6 @@ class ShipnowScren extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final checkoutProvider =
-        Provider.of<CheckOutProvider>(context, listen: false);
-    final cartProvider = Provider.of<CartProvider>(context, listen: false);
-
     int orderid = int.parse(orderId.toString());
     List<OrderItems> cartItems =
         itemlist.map((item) => OrderItems.fromMap(item)).toList();

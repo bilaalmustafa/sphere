@@ -1,11 +1,7 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sphere/UI/screens/BottomNavigationBar_Screen/Stores_Screens/Stores_Screen.dart';
 import 'package:sphere/UI/screens/Products_DetialScreen/ProductDetailScreen.dart';
-import 'package:sphere/models/cartModel.dart';
 
 class FeedScreenProvider with ChangeNotifier {
   TextEditingController _searchController = TextEditingController();
